@@ -8,7 +8,7 @@ export type JobContextValue = {
   
   const JobContext = createContext<JobContextValue | undefined>(undefined);
   
-  export const useOccasion = () => useContext(JobContext);
+  export const useJob = () => useContext(JobContext);
   
   const JobProvider = ({ children }: any) => {
     const [isFetchJob, setIsFetchJob] = useState(false);
