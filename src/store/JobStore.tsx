@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { get } from '../api/airtableApi';
 
 export type JobContextValue = {
     isFetchJob: boolean;
@@ -14,9 +15,12 @@ export type JobContextValue = {
 
     const fetchJob = async (id: string) => {
         setIsFetchJob(true)
-        // await = ;
+        // call api get with path 'Job Listing Data'
         setIsFetchJob(false) 
     }
+
+    // fetchCurrentJob
+      // call api get with path 'Job Listing Data/{id}'
 
 
     
