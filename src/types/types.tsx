@@ -1,0 +1,25 @@
+import { string } from "prop-types"
+
+export interface IJob {
+    jobTitle: string,
+    jobDescription: string,
+    jobDescriptionUpload: string,
+    employer: string,
+    sector: string,
+    workType: string,
+    locationType: string,
+    location: string,
+    payRange: string,
+    hourlyWages: string,
+    payCode: string,
+    benefits: string,
+    startingDate: string,
+    closingDate: string,
+    address: string,
+    navajoPreference: string,
+    veteranPreference: string,
+    requiredDocuments: string,
+    preferredEdExp: string,
+    additionalReq: string,
+    applicationIn: string,
+}
