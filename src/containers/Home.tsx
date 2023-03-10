@@ -11,7 +11,7 @@ const Home = () => {
       } = useJob() as JobContextValue;  
     
       useEffect(() => {
-        fetchJobs()
+        // fetchJobs()
       }, []);
 
     //   const renderJobs = () => {

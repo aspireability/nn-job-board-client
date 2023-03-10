@@ -28,7 +28,7 @@ export type JobContextValue = {
     const fetchJobs = async () => {
         setIsFetchingJobs(true);
         // call api get with path 'Job Listing Data'
-        const josbResponse = await get('/ob%20Listing%20Data') ;
+        const josbResponse = await get('Job Listing Data') ;
         setJobs(josbResponse);
         setIsFetchingJobs(false);
     }
@@ -37,7 +37,7 @@ export type JobContextValue = {
     const fetchCurrentJob = async (id: string) => {
         setIsFetchingCurrentJob(true)
         // call api get with path 'Job Listing Data/{id}'
-        const currentJobResponse = await get('/ob%20Listing%20Data' + {id}); 
+        const currentJobResponse = await get(`Job Listing Data/${id}`); 
         setCurrentJob(currentJobResponse)
         setIsFetchingCurrentJob(false) 
     }
