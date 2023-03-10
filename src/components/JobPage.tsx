@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, List, ListItem, VStack, Text, ListIcon, Image, Spacer } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, List, ListItem, VStack, Text, ListIcon, Image, Spacer, Link } from '@chakra-ui/react'
 import { BsDash } from 'react-icons/bs'
 import React from 'react'
 import { IJob } from '../types/types'
@@ -11,6 +11,8 @@ interface JobPageProps {
 const JobPage = ({
     job
 }: JobPageProps) => {
+
+var jobHasClassification = job.classification !== '' && job.classification !== undefined;
     
   return (
     <Box boxShadow={'xl'} p='6' rounded='md' bg='white'>
@@ -26,6 +28,7 @@ const JobPage = ({
                         <Box boxSize='sm'>
                             <Text fontWeight={'semibold'}>Job Description Document (Upload)</Text>
                             <Image src={job.jobDescriptionUpload} alt={job.jobTitle} />
+                            {job.jobDescriptionUploadThumbnail}
                         </Box>
                         <Box>
                             <Text fontWeight={'semibold'}>Location Type</Text>
@@ -98,6 +101,12 @@ const JobPage = ({
                                 <Text fontWeight={'semibold'}>Required Documents</Text>
                                 {job.requiredDocuments}
                             </Box>
+                            {jobHasClassification && 
+                            <Box>
+                                <Text fontWeight={'semibold'}>Classification</Text>
+                                {job.classification}
+                            </Box>
+                            }
                             <Box>
                                 <Text fontWeight={'semibold'}>Preferred Educational/Experience</Text>
                                     <HStack>
@@ -116,7 +125,7 @@ const JobPage = ({
                     </Box>
                 </HStack>
             </Box>
-            <Button colorScheme='blue' width={'xl'}>Apply Now</Button>
+            <Link href={job.applicationLink} isExternal><Button colorScheme='blue' variant={'solid'} width={'xl'}>Apply Now</Button></Link>
         </VStack>            
     </Box>
   )

@@ -6,6 +6,7 @@ export const example: IJob =
         jobTitle: 'Reporter',
         jobDescription: 'News/Media',
         jobDescriptionUpload: 'https://airtable.com/appNJFmnlv2q3EbOO/tblT4cU0P37kVu5UG/viwammNZCxaoiF2NX/recq7q2Xew7d4vcPC/fldJhXfPv8owhceX1?copyLinkToCellOrRecordOrigin=gridView',
+        jobDescriptionUploadThumbnail: 'large',
         employer: 'Navajo Times',
         sector: 'Tibeal Enterprise',
         workType: 'Full Time',
@@ -21,7 +22,9 @@ export const example: IJob =
         navajoPreference: 'Yes',
         veteranPreference: 'No',
         requiredDocuments: 'Bachelors Degree Drivers license CIB',
+        classification: '',
         preferredEdExp: '',
         additionalReq: '',
         applicationIn: 'mail application to NT',
+        applicationLink: 'https://navajotimes.com/contact-us/jobs-at-the-times/'
     }
