@@ -1,9 +1,11 @@
 import { string } from "prop-types"
 
 export interface IJob {
+    id: string,
     jobTitle: string,
     jobDescription: string,
-    jobDescriptionUpload: string,
+    jobDescriptionUpload?: string,
+    // jobDescriptionUploadThumbnail: string,
     employer: string,
     sector: string,
     workType: string,

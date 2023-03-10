@@ -2,6 +2,7 @@ import { IJob } from "../types/types";
 
 export const example: IJob = 
     {
+        id: '1',
         jobTitle: 'Reporter',
         jobDescription: 'News/Media',
         jobDescriptionUpload: 'https://airtable.com/appNJFmnlv2q3EbOO/tblT4cU0P37kVu5UG/viwammNZCxaoiF2NX/recq7q2Xew7d4vcPC/fldJhXfPv8owhceX1?copyLinkToCellOrRecordOrigin=gridView',

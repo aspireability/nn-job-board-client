@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { get } from '../api/airtableApi';
+import { get as lodashGet } from 'lodash';
 import { IJob } from '../types/types';
 
 export type JobContextValue = {
@@ -16,9 +17,34 @@ export type JobContextValue = {
   
   export const useJob = () => useContext(JobContext);
   
-//   const transformAirtableRecord = (airtableRecord: IJob) => {
-//     airtableRecord.jobTitle : 
-//   }
+  const transformAirtableRecord = (airtableRecord: any): IJob => {
+    const job: IJob = {
+      id: airtableRecord['id'],
+      jobTitle: airtableRecord['fields']['Job Title'],
+      jobDescription: 'News/Media',
+      jobDescriptionUpload: lodashGet(airtableRecord, 'fields.Job Description Document (Upload).0.url'),
+      employer: 'Navajo Times',
+      sector: 'Tibeal Enterprise',
+      workType: 'Full Time',
+      locationType: 'Hybrid',
+      location: 'Window Rock, AZ',
+      payRange: '',
+      hourlyWages: '',
+      payCode: '',
+      benefits: '',
+      startingDate: '2/1/2023',
+      closingDate: '',
+      address: '',
+      navajoPreference: 'Yes',
+      veteranPreference: 'No',
+      requiredDocuments: 'Bachelors Degree Drivers license CIB',
+      preferredEdExp: '',
+      additionalReq: '',
+      applicationIn: 'mail application to NT',
+    }
+    return job;
+  }
+
   const JobProvider = ({ children }: any) => {
     const [jobs, setJobs] = useState(undefined);
     const [isFetchingJobs, setIsFetchingJobs] = useState(false);
@@ -29,7 +55,13 @@ export type JobContextValue = {
         setIsFetchingJobs(true);
         // call api get with path 'Job Listing Data'
         const josbResponse = await get('Job Listing Data') ;
-        setJobs(josbResponse);
+        const records = josbResponse.records;
+        console.log('records', josbResponse);
+        const transformedJobs = records.map((record: any) => {
+          return transformAirtableRecord(record);
+        });
+        console.log('transformedJobs', transformedJobs);
+        setJobs(transformedJobs);
         setIsFetchingJobs(false);
     }
     
