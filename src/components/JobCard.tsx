@@ -10,7 +10,7 @@ const JobCard = ({
     job,
 }: JobCardProps) => {
      return (
-        <Box boxShadow={'2xl'} p='6' rounded='md' bg='white' width={'sm'} height={'sm'}>
+        <Box boxShadow={'2xl'} p='6' rounded='md' bg='white' width={'sm'} height={'md'}>
             <Box>
                 <Heading>{job.jobTitle}</Heading>
             </Box>

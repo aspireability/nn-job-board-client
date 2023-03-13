@@ -5,40 +5,17 @@ import { IJob } from '../types/types'
 import JobCard from './JobCard'
 
 interface HomePageProps {
-
+    job: IJob
 }
 
 const HomePage =({
-
+    job
 }: HomePageProps) => {
   return (
-    <Box>
-        <Box marginBottom={'4'}>
-            <List spacing={'10'}>
-                <HStack>
-                    
-                    <Box>
-                        <Heading>Search</Heading>
-                        <Input />
-                    </Box>
-                    <Spacer />
-                    <Box>
-                        <Heading>Location</Heading>
-                        <Input />
-                    </Box>
-                    <Spacer />
-                    <Box>
-                        <Heading>Work Type</Heading>
-                        <Select placeholder='Select'>
-                            <option value='FullTime'>FullTime</option>
-                            <option value='PartTime'>PartTime</option>
-                        </Select>
-                    </Box>
-                </HStack>
-            </List>
-        </Box>
-        <JobCard 
-        job={example} />
+    <Box  marginTop={'4'}>
+        
+        <JobCard job={job} />
+       
     </Box>
   )
 }

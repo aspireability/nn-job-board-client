@@ -1,9 +1,11 @@
 import { Box, Button, Heading, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import JobPage from '../components/JobPage';
 import { JobContextValue, useJob } from '../store/JobStore';
 
 const Job = () => {
+    const { jobId } = useParams();
     const {
         isFetchingCurrentJob,
         fetchCurrentJob,
@@ -11,7 +13,7 @@ const Job = () => {
     } = useJob() as JobContextValue;  
     
       useEffect(() => {
-    //    fetchCurrentJob()
+       fetchCurrentJob(jobId as string)
       }, []);
 
       const renderCurrentJob = () => {
@@ -20,8 +22,12 @@ const Job = () => {
           }
       
           if (currentJob === undefined) {
-            return <Text>Error fetching occasion</Text>
+            return <Text>Error fetching job</Text>
           }
+
+          console.log(currentJob)
+          
+          return <JobPage job={currentJob} />
       }
     
     return (
