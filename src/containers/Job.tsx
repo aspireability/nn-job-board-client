@@ -33,8 +33,6 @@ const Job = () => {
     return (
         <Box backgroundColor={'azure'}>
           <Button as={Link} to="/" colorScheme='blue'>Back to Home Page</Button>
-          <Heading>Job Page</Heading>
-    
           {renderCurrentJob()}
         </Box>
       )

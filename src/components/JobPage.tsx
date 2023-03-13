@@ -25,7 +25,7 @@ var jobHasClassification = job.classification !== '' && job.classification !== u
                 <HStack>
                     <Box marginRight={'100'}>
                         <List spacing={'10'}>
-                        <Box boxSize='sm'>
+                        <Box boxSize={'sm'}>
                             <Text fontWeight={'semibold'}>Job Description Document (Upload)</Text>
                             <Image src={job.jobDescriptionUpload} alt={job.jobTitle} />
                             {job.jobDescriptionUploadThumbnail}

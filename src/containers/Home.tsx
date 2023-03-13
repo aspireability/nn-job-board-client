@@ -37,7 +37,6 @@ const Home = () => {
       return (
         <Box>
           <Heading>Home Page</Heading>
-          <Heading>Jobs</Heading>
           <Box marginBottom={'4'}>
             <List spacing={'10'}>
                 <HStack>

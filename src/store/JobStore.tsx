@@ -57,9 +57,9 @@ export type JobContextValue = {
     const fetchJobs = async () => {
         setIsFetchingJobs(true);
         // call api get with path 'Job Listing Data'
-        const josbResponse = await get('Job Listing Data') ;
-        const records = josbResponse.records;
-        console.log('records', josbResponse);
+        const jobsResponse = await get('Job Listing Data') ;
+        const records = jobsResponse.records;
+        console.log('records', jobsResponse);
         const transformedJobs = records.map((record: any) => {
           return transformAirtableRecord(record);
         });
@@ -72,8 +72,11 @@ export type JobContextValue = {
     const fetchCurrentJob = async (id: string) => {
         setIsFetchingCurrentJob(true)
         // call api get with path 'Job Listing Data/{id}'
-        const currentJobResponse = await get(`Job Listing Data/${id}`); 
-        setCurrentJob(currentJobResponse)
+        const currentJobResponse = await get(`Job Listing Data/${id}`);
+        console.log('current record', currentJobResponse);
+        const transformedJob = transformAirtableRecord(currentJobResponse);
+        console.log('transformedJob', transformedJob);
+        setCurrentJob(transformedJob)
         setIsFetchingCurrentJob(false) 
     }
       

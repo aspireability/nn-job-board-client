@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Input, List, Select, Spacer } from '@chakra-ui/react'
+import { Box, Heading, HStack, Input, List, Select, SimpleGrid, Spacer } from '@chakra-ui/react'
 import React from 'react'
 import { example } from '../mock_data/data';
 import { IJob } from '../types/types'
@@ -13,9 +13,9 @@ const HomePage =({
 }: HomePageProps) => {
   return (
     <Box  marginTop={'4'}>
-        
-        <JobCard job={job} />
-       
+            <Box>
+                <JobCard job={job} />
+            </Box>
     </Box>
   )
 }
