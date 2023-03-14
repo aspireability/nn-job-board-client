@@ -10,7 +10,11 @@ const Home = () => {
         jobs, 
         isFetchingJobs,
         fetchJobs
-      } = useJob() as JobContextValue;  
+      } = useJob() as JobContextValue;
+      
+      const handleSearch = (job: any) => {setSearchTerm(job.target.searchTerm)};
+      const handleWorkType = (job: any) => {setWorkType(job.target.workType)};
+      const handleSector = (job: any) => {setSector(job.target.sector)};
     
       const [searchTerm, setSearchTerm] = useState<string>('');
       const [workType, setWorkType] = useState<string>('');
@@ -19,6 +23,8 @@ const Home = () => {
       useEffect(() => {
         const filterOptions: IFilterOptions = {};
         if (searchTerm !== '') filterOptions.searchTerm = searchTerm;
+        if (workType !== '') filterOptions.workType = workType;
+        if (sector !== '') filterOptions.sector = sector;
         // TODO work type, sector
         
         fetchJobs(filterOptions)
@@ -51,19 +57,27 @@ const Home = () => {
                     
                     <Box>
                         <Heading>Search</Heading>
-                        <Input />
+                        <Input placeholder='search' onChange={handleSearch} value={searchTerm} />
                     </Box>
                     <Spacer />
                     <Box>
-                        <Heading>Location</Heading>
-                        <Input />
+                    <Heading>Sector</Heading>
+                        <Select placeholder='Select' onChange={handleSector} value={sector} >
+                            <option value='Tribal Enterprise'>Full Time</option>
+                            <option value='Government'>Part Time</option>
+                            <option value='Non-Profit Organization'>Seasonal</option>
+                            <option value='Private Sector'>Contract</option>
+                        </Select>
                     </Box>
                     <Spacer />
                     <Box>
                         <Heading>Work Type</Heading>
-                        <Select placeholder='Select'>
-                            <option value='FullTime'>FullTime</option>
-                            <option value='PartTime'>PartTime</option>
+                        <Select placeholder='Select' onChange={handleWorkType} value={workType} >
+                            <option value='Full Time'>Full Time</option>
+                            <option value='Part Time'>Part Time</option>
+                            <option value='Seasonal'>Seasonal</option>
+                            <option value='Contract'>Contract</option>
+                            <option value='Temporary'>Temporary</option>
                         </Select>
                     </Box>
                 </HStack>
