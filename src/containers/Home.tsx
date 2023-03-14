@@ -1,8 +1,8 @@
 import { Box, Heading, HStack, Input, List, Select, Spacer, Text } from '@chakra-ui/react';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import HomePage from '../components/HomePage';
-import { JobContextValue, useJob } from '../store/JobStore';
+import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
 import { IJob } from '../types/types';
 
 const Home = () => {
@@ -12,10 +12,18 @@ const Home = () => {
         fetchJobs
       } = useJob() as JobContextValue;  
     
-      useEffect(() => {
-        fetchJobs()
-      }, []);
+      const [searchTerm, setSearchTerm] = useState<string>('');
+      const [workType, setWorkType] = useState<string>('');
+      const [sector, setSector] = useState<string>('');
 
+      useEffect(() => {
+        const filterOptions: IFilterOptions = {};
+        if (searchTerm !== '') filterOptions.searchTerm = searchTerm;
+        // TODO work type, sector
+        
+        fetchJobs(filterOptions)
+      }, [searchTerm, workType, sector]);
+           
       const renderJobs = () => {
         if (isFetchingJobs) {
           return <Text>Loading ...</Text>
