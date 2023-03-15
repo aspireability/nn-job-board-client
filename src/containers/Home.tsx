@@ -60,7 +60,7 @@ const Home = () => {
                     
                     <Box>
                         <Heading>Search</Heading>
-                        <Input placeholder='search' onChange={handleSearch} value={searchTerm} />
+                        <Input placeholder='Search by title, description or location' onChange={handleSearch} value={searchTerm} />
                     </Box>
                     <Spacer />
                     <Box>

@@ -73,11 +73,11 @@ const JobProvider = ({ children }: any) => {
 
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
-        filterConstraints.push(`SEARCH('${filterOptions.searchTerm}',{Job Title})`)
-        // filterConstraints.push(`OR(SEARCH('${filterOptions.searchTerm}',{Job Title}),
-        // SEARCH('${filterOptions.searchTerm}',{Job Description),
-        // SEARCH('${filterOptions.searchTerm}',{Location))`)
-        // TODO add other columns to search, may need to do an OR here
+        const columnsToSearch = ['Job Title', 'Job Description', 'Location'];
+        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}',{${column}})`);        
+        const combinedSearch = `OR(${searchQueries.join(',')})`;
+        console.log('combinedSearch', combinedSearch);
+        filterConstraints.push(combinedSearch);
       }
       if (filterOptions.workType) {
         filterConstraints.push(`{Work Type}='${filterOptions.workType}'`)
