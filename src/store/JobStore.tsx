@@ -73,9 +73,10 @@ const JobProvider = ({ children }: any) => {
 
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
-        filterConstraints.push(`SEARCH('${filterOptions.searchTerm}',{Job Title})`) || 
-        filterConstraints.push(`SEARCH('${filterOptions.searchTerm}',{Job Description)`) ||
-        filterConstraints.push(`SEARCH('${filterOptions.searchTerm}',{Location)`)
+        filterConstraints.push(`SEARCH('${filterOptions.searchTerm}',{Job Title})`)
+        // filterConstraints.push(`OR(SEARCH('${filterOptions.searchTerm}',{Job Title}),
+        // SEARCH('${filterOptions.searchTerm}',{Job Description),
+        // SEARCH('${filterOptions.searchTerm}',{Location))`)
         // TODO add other columns to search, may need to do an OR here
       }
       if (filterOptions.workType) {

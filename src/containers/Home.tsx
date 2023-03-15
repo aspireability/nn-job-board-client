@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Input, List, Select, Spacer, Text } from '@chakra-ui/react';
+import { Box, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import HomePage from '../components/HomePage';
@@ -11,14 +11,14 @@ const Home = () => {
         isFetchingJobs,
         fetchJobs
       } = useJob() as JobContextValue;
-      
-      const handleSearch = (job: any) => {setSearchTerm(job.target.searchTerm)};
-      const handleWorkType = (job: any) => {setWorkType(job.target.workType)};
-      const handleSector = (job: any) => {setSector(job.target.sector)};
     
       const [searchTerm, setSearchTerm] = useState<string>('');
       const [workType, setWorkType] = useState<string>('');
       const [sector, setSector] = useState<string>('');
+
+      const handleSearch = (event: any) => {setSearchTerm(event.target.value)};
+      const handleWorkType = (event: any) => {setWorkType(event.target.value)};
+      const handleSector = (event: any) => {setSector(event.target.value)};
 
       useEffect(() => {
         const filterOptions: IFilterOptions = {};
@@ -30,7 +30,7 @@ const Home = () => {
         fetchJobs(filterOptions)
       }, [searchTerm, workType, sector]);
            
-      const renderJobs = () => {
+      const renderJobs = () => { 
         if (isFetchingJobs) {
           return <Text>Loading ...</Text>
         }
@@ -43,9 +43,12 @@ const Home = () => {
         const path = '/job/'+job.id;
 
         return (
-           <Link to={path}><HomePage job={job}/></Link> 
+            <SimpleGrid columns={3}>
+           <Link to={path}><HomePage job={job}/></Link>
+           </SimpleGrid>
         )
        })
+       
       }
     
       return (
@@ -63,10 +66,10 @@ const Home = () => {
                     <Box>
                     <Heading>Sector</Heading>
                         <Select placeholder='Select' onChange={handleSector} value={sector} >
-                            <option value='Tribal Enterprise'>Full Time</option>
-                            <option value='Government'>Part Time</option>
-                            <option value='Non-Profit Organization'>Seasonal</option>
-                            <option value='Private Sector'>Contract</option>
+                            <option value='Tribal Enterprise'>Tribal Enterprise</option>
+                            <option value='Government'>Government</option>
+                            <option value='Non-Profit Organization'>Non-Profit Organization</option>
+                            <option value='Private Sector'>Private Sector</option>
                         </Select>
                     </Box>
                     <Spacer />
