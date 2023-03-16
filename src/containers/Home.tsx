@@ -1,11 +1,12 @@
 import { Box, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
 import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
 import { IJob } from '../types/types';
 
 const Home = () => {
+    const navigate = useNavigate();
     const {
         jobs, 
         isFetchingJobs,
@@ -39,16 +40,12 @@ const Home = () => {
           return <Text>Error fetching jobs</Text>
         }
 
-       return jobs.map((job: IJob) => {
-        const path = '/job/'+job.id;
+        const onJobClick = (jobId: string) => {
+          const path = '/job/'+jobId;
+          navigate(path);
+        }
 
-        return (
-            <SimpleGrid columns={3}>
-           <Link to={path}><HomePage job={job}/></Link>
-           </SimpleGrid>
-        )
-       })
-       
+       return <HomePage jobs={jobs} onJobClick={onJobClick} />
       }
     
       return (
