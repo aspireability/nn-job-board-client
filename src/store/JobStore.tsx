@@ -49,6 +49,8 @@ export type JobContextValue = {
   isFetchingCurrentJob: boolean;
   fetchCurrentJob: (id: string) => void;
   currentJob: IJob | undefined;
+  currentPage: any;
+  movePage: (pageNumber: number) => void;
   
 }
 
@@ -63,6 +65,8 @@ const JobProvider = ({ children }: any) => {
   const [isFetchingAllJobs, setIsFetchingAllJobs] = useState(false);
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState<any>('1');
+
 
   const fetchJobs = async (filterOptions: IFilterOptions) => {
       let fetchedFirstPage = false;
@@ -118,6 +122,16 @@ const JobProvider = ({ children }: any) => {
         setIsFetchingAllJobs(false); 
       });
   }
+
+  const movePage = (pageNumber: number) => {
+    setCurrentPage(true);
+    setJobs(allJobs)
+    const page_size = 100;
+    const end = pageNumber * page_size;
+    const start = end - page_size;
+    console.log('pageNumber', pageNumber);
+    return allJobs?.slice(start, end);
+  }
   
 
   const fetchCurrentJob = async (id: string) => {
@@ -142,7 +156,9 @@ const JobProvider = ({ children }: any) => {
           fetchJobs,
           isFetchingCurrentJob,
           fetchCurrentJob,
-          currentJob
+          currentJob,
+          currentPage,
+          movePage
       }}
     >
       {children}

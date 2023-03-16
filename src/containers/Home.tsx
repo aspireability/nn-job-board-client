@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import { Box, Button, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
@@ -10,7 +10,10 @@ const Home = () => {
     const {
         jobs, 
         isFetchingJobs,
-        fetchJobs
+        fetchJobs,
+        allJobs,
+        currentPage,
+        movePage
       } = useJob() as JobContextValue;
     
       const [searchTerm, setSearchTerm] = useState<string>('');
@@ -82,6 +85,14 @@ const Home = () => {
                     </Box>
                 </HStack>
             </List>
+        </Box>
+        <Box>
+            <HStack>
+                <Text>Showing 1-{jobs?.length} Jobs of {allJobs?.length} results</Text>
+                <Spacer />
+                <Button onClick={() => movePage(currentPage)}>Previous</Button>
+                <Button onClick={() => movePage(currentPage)} width={'90px'}>Next</Button>
+            </HStack>
         </Box>
           <Box>
           {renderJobs()}
