@@ -62,7 +62,7 @@ const Home = () => {
                     <Spacer />
                     <Box>
                     <Heading>Sector</Heading>
-                        <Select placeholder='Select' onChange={handleSector} value={sector} >
+                        <Select placeholder='View All' onChange={handleSector} value={sector} >
                             <option value='Tribal Enterprise'>Tribal Enterprise</option>
                             <option value='Government'>Government</option>
                             <option value='Non-Profit Organization'>Non-Profit Organization</option>
@@ -72,7 +72,7 @@ const Home = () => {
                     <Spacer />
                     <Box>
                         <Heading>Work Type</Heading>
-                        <Select placeholder='Select' onChange={handleWorkType} value={workType} >
+                        <Select placeholder='View All' onChange={handleWorkType} value={workType} >
                             <option value='Full Time'>Full Time</option>
                             <option value='Part Time'>Part Time</option>
                             <option value='Seasonal'>Seasonal</option>
