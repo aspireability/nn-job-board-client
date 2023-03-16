@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import JobPage from '../components/JobPage';

@@ -14,7 +14,7 @@ const JobCard = ({
             <Box>
                 <Heading>{job.jobTitle}</Heading>
             </Box>
-            <SimpleGrid columns={1} spacing={1}>
+            <SimpleGrid spacing={1}>
             <Box height='55px'>
                 <Text fontWeight={'semibold'}>EMPLOYER</Text>
                 {job.employer}
