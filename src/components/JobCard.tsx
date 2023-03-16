@@ -9,33 +9,25 @@ interface JobCardProps {
 const JobCard = ({
     job,
 }: JobCardProps) => {
+  const renderProperty = (label: string, value?: string) => {
+    return (
+      <Box mb={3}>
+        <Text color="gray.600" fontSize="sm">{label}</Text>
+        <Text fontSize="lg">{value || 'N/A'}</Text>
+      </Box>
+    )
+  }
+
      return (
-        <Box boxShadow={'2xl'} p='6' rounded='md' bg='white' width={'md'} height={'md'}>
-            <Box>
-                <Heading>{job.jobTitle}</Heading>
-            </Box>
-            <SimpleGrid spacing={1}>
-            <Box height='55px'>
-                <Text fontWeight={'semibold'}>EMPLOYER</Text>
-                {job.employer}
-            </Box>
-            <Box height='55px'>
-                <Text fontWeight={'semibold'}>WORK TYPE</Text>
-                {job.workType}
-            </Box>
-            <Box height='55px'>
-                <Text fontWeight={'semibold'}>SECTOR</Text>
-                {job.sector}
-            </Box>
-            <Box height='55px'>
-                <Text fontWeight={'semibold'}>LOCATION TYPE</Text>
-                {job.locationType}
-            </Box>
-            <Box height='55px'>
-                <Text fontWeight={'semibold'}>LOCATION</Text>
-                {job.location}
-            </Box>
-            </SimpleGrid>
+        <Box boxShadow="md" border="1px" borderColor="gray.200" borderRadius={6} p={6} height="100%">
+          <Box mb={3}>
+              <Heading fontSize="2xl">{job.jobTitle}</Heading>
+          </Box>
+          {renderProperty('Employer', job.employer)}
+          {renderProperty('Work Type', job.workType)}
+          {renderProperty('Sector', job.sector)}
+          {renderProperty('Location Type', job.locationType)}
+          {renderProperty('Location', job.location)}
         </Box>
   )
 }

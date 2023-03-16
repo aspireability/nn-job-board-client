@@ -7,6 +7,8 @@
     "@chakra-ui/storybook-addon": "^4.0.16",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@fontsource/inter": "^4.5.15",
+    "@fontsource/manrope": "^4.5.13",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
