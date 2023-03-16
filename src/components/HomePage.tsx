@@ -1,21 +1,30 @@
 import { Box, Heading, HStack, Input, List, Select, SimpleGrid, Spacer } from '@chakra-ui/react'
 import React from 'react'
 import { example } from '../mock_data/data';
+import { Link } from 'react-router-dom';
 import { IJob } from '../types/types'
 import JobCard from './JobCard'
 
 interface HomePageProps {
-    job: IJob
+    jobs: IJob[],
+    onJobClick: (jobId: string) => void
 }
 
 const HomePage =({
-    job
+    jobs,
+    onJobClick
 }: HomePageProps) => {
   return (
     <Box  marginTop={'4'}>
-            <Box>
-                <JobCard job={job} />
-            </Box>
+      <SimpleGrid columns={3} spacing={10}>
+        {jobs.map(job => {          
+          return (
+            <Box onClick={() => onJobClick(job.id)}>
+              <JobCard job={job} />
+            </Box>            
+          )
+        })}
+      </SimpleGrid>
     </Box>
   )
 }
