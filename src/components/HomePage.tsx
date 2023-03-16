@@ -17,7 +17,7 @@ const HomePage =({
   return (
   
     <Box marginTop={'4'}>
-      <SimpleGrid minChildWidth="300px" gap={10}>
+      <SimpleGrid minChildWidth="300px" gap={{ base: 5, md: 10 }}>
         {jobs.map(job => {          
           return (
             <Box onClick={() => onJobClick(job.id)}>
