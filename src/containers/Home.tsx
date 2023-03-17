@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import { Box, Button, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
@@ -10,8 +10,13 @@ const Home = () => {
     const {
         jobs, 
         isFetchingJobs,
-        fetchJobs
+        fetchJobs,
+        allJobs,
+        currentPage,
+        movePage
       } = useJob() as JobContextValue;
+
+      
     
       const [searchTerm, setSearchTerm] = useState<string>('');
       const [workType, setWorkType] = useState<string>('');
@@ -30,6 +35,34 @@ const Home = () => {
         
         fetchJobs(filterOptions)
       }, [searchTerm, workType, sector]);
+
+      
+
+      const renderPages = () => {
+        if (allJobs === undefined || jobs === undefined) {
+          return null;
+        }
+
+        var currentPageeEquals1 = currentPage === 1;
+        var currentPageeEqualsLastPage = currentPage === Math.ceil(allJobs.length / 100);
+
+        var endCount = currentPageeEquals1 ? jobs.length : ((currentPage-1) * 100) + jobs.length;
+        var startCount = currentPageeEquals1 ? 1 : ((currentPage-1) * 100) + 1;
+
+        return (
+            
+        <Box>
+            <HStack>
+                <Text>Showing Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
+                <Spacer />
+                {!currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)}>Previous</Button>}
+                {currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
+                {!currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
+                {currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
+            </HStack>
+        </Box>
+        )
+      }
            
       const renderJobs = () => { 
         if (isFetchingJobs) {
@@ -83,6 +116,10 @@ const Home = () => {
                 </HStack>
             </List>
         </Box>
+        <Box>
+            {renderPages()}
+        </Box>
+        
           <Box>
           {renderJobs()}
           </Box>
