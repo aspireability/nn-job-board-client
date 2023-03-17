@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid, Text } from '@chakra-ui/react'
 import React from 'react'
 import { example } from '../mock_data/data';
 import { Link } from 'react-router-dom';
@@ -14,9 +14,12 @@ const HomePage =({
     jobs,
     onJobClick
 }: HomePageProps) => {
-  return (
-  
-    <Box marginTop={'4'}>
+  if (jobs.length === 0) {
+    return <Text fontSize="xl">No jobs found matching your search.</Text>
+  }
+
+  return (  
+    <Box>
       <SimpleGrid minChildWidth="300px" gap={{ base: 5, md: 10 }}>
         {jobs.map(job => {          
           return (

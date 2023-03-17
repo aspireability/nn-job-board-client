@@ -90,7 +90,7 @@ const Home = () => {
                     </Select>
                 </Box>
               </HStack>        
-              <Box><Link fontSize="sm" color='blue.500'>Clear All</Link></Box>             
+              <Box><Link fontSize="sm" color='blue.500'>Clear Search</Link></Box>             
             </SimpleGrid>
           </Box>
           <Box mt={{ base: "156px", md: "85px" }} pb={15}>          
