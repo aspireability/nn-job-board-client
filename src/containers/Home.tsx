@@ -15,6 +15,8 @@ const Home = () => {
         currentPage,
         movePage
       } = useJob() as JobContextValue;
+
+      
     
       const [searchTerm, setSearchTerm] = useState<string>('');
       const [workType, setWorkType] = useState<string>('');
@@ -33,6 +35,26 @@ const Home = () => {
         
         fetchJobs(filterOptions)
       }, [searchTerm, workType, sector]);
+
+      
+
+      const renderPages = () => {
+        var currentPageeEquals1 = currentPage === 1;
+        var currentPageeEqualsLastPage = currentPage === Math.ceil(allJobs?.length / 100);
+        return (
+            
+        <Box>
+            <HStack>
+                <Text>Showing 1-{jobs?.length} Jobs of {allJobs?.length} results</Text>
+                <Spacer />
+                {!currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)}>Previous</Button>}
+                {currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
+                {/* {!currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
+                {currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>} */}
+            </HStack>
+        </Box>
+        )
+      }
            
       const renderJobs = () => { 
         if (isFetchingJobs) {
@@ -87,13 +109,9 @@ const Home = () => {
             </List>
         </Box>
         <Box>
-            <HStack>
-                <Text>Showing 1-{jobs?.length} Jobs of {allJobs?.length} results</Text>
-                <Spacer />
-                <Button onClick={() => movePage(currentPage)}>Previous</Button>
-                <Button onClick={() => movePage(currentPage)} width={'90px'}>Next</Button>
-            </HStack>
+            {renderPages()}
         </Box>
+        
           <Box>
           {renderJobs()}
           </Box>
