@@ -39,18 +39,26 @@ const Home = () => {
       
 
       const renderPages = () => {
+        if (allJobs === undefined || jobs === undefined) {
+          return null;
+        }
+
         var currentPageeEquals1 = currentPage === 1;
-        var currentPageeEqualsLastPage = currentPage === Math.ceil(allJobs?.length / 100);
+        var currentPageeEqualsLastPage = currentPage === Math.ceil(allJobs.length / 100);
+
+        var endCount = currentPageeEquals1 ? jobs.length : ((currentPage-1) * 100) + jobs.length;
+        var startCount = currentPageeEquals1 ? 1 : ((currentPage-1) * 100) + 1;
+
         return (
             
         <Box>
             <HStack>
-                <Text>Showing 1-{jobs?.length} Jobs of {allJobs?.length} results</Text>
+                <Text>Showing Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
                 <Spacer />
                 {!currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)}>Previous</Button>}
                 {currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
-                {/* {!currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
-                {currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>} */}
+                {!currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
+                {currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
             </HStack>
         </Box>
         )
