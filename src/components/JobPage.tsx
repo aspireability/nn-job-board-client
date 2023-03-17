@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, List, ListItem, VStack, Text, ListIcon, Image, Spacer, Link } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, List, ListItem, VStack, Text, ListIcon, Image, Spacer, Link, SimpleGrid } from '@chakra-ui/react'
 import { BsDash } from 'react-icons/bs'
 import React from 'react'
 import { IJob } from '../types/types'
@@ -15,20 +15,23 @@ const JobPage = ({
 var jobHasClassification = job.classification !== '' && job.classification !== undefined;
     
   return (
-    <Box boxShadow={'xl'} p='6' rounded='md' bg='white'>
+    <Box>
+       
         <Box>
             <Text fontWeight={'semibold'}>Job Title</Text>
             <Heading>{job.jobTitle}</Heading>
         </Box>
+        <SimpleGrid minChildWidth="300px" gap={{ base: 1, md: 5 }} columns={{base: 2, md: 5}} alignItems={'end'}>
         <VStack>
             <Box>
                 <HStack>
-                    <Box marginRight={'100'}>
+                    <Box>
                         <List spacing={'10'}>
                         <Box boxSize={'sm'}>
                             <Text fontWeight={'semibold'}>Job Description Document (Upload)</Text>
-                            <Image src={job.jobDescriptionUpload} alt={job.jobTitle} />
-                            {job.jobDescriptionUploadThumbnail}
+                           <Link href={job.jobDescriptionUpload}>
+                            <Image src={job.jobDescriptionUploadThumbnail} alt={job.jobTitle} />
+                            </Link>
                         </Box>
                         <Box>
                             <Text fontWeight={'semibold'}>Location Type</Text>
@@ -48,7 +51,6 @@ var jobHasClassification = job.classification !== '' && job.classification !== u
                        </Box>
                        </List>
                     </Box>
-                    <Spacer />
                     <Box>
                         <List spacing={10}>
                             <Box>
@@ -125,8 +127,11 @@ var jobHasClassification = job.classification !== '' && job.classification !== u
                     </Box>
                 </HStack>
             </Box>
+            <Box>
             <Link href={job.applicationLink} isExternal><Button colorScheme='blue' variant={'solid'} width={'xl'}>Apply Now</Button></Link>
-        </VStack>            
+            </Box>
+        </VStack>
+        </SimpleGrid>            
     </Box>
   )
   

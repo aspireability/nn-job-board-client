@@ -31,9 +31,14 @@ const Job = () => {
       }
     
     return (
-        <Box backgroundColor={'azure'}>
-          <Button as={Link} to="/" colorScheme='blue'>Back to Home Page</Button>
-          {renderCurrentJob()}
+        <Box 
+        // backgroundColor={'azure'}
+        >
+        <Button as={Link} to="/" colorScheme='blue'>Back to Home Page</Button>
+        <Box>
+            <Box>{renderCurrentJob()}</Box>
+        </Box>
+          
         </Box>
       )
 }
