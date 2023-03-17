@@ -4,4 +4,4 @@ export const sectorOptions = ['Government', 'Non-Profit Organization', 'Navajo E
 
 export const locationTypeOptions = ['Hybrid', 'On-site', 'Remote']
 
-export const colorSchemes = ['blue', 'orange', 'green', 'teal', 'purple', 'cyan', 'pink', 'yellow', 'gray']
+export const colorSchemes = ['blue', 'green', 'purple', 'teal', 'orange', 'cyan', 'pink', 'yellow', 'gray', 'red']
