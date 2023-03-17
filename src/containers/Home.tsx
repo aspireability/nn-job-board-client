@@ -1,9 +1,10 @@
-import { Box, Button, Heading, HStack, Input, List, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import { Box, Button, Link, HStack, Input, InputGroup, InputLeftElement, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
 import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
 import { IJob } from '../types/types';
+import { SearchIcon } from '@chakra-ui/icons'
 
 const Home = () => {
     const navigate = useNavigate();
@@ -53,12 +54,12 @@ const Home = () => {
             
         <Box>
             <HStack>
-                <Text>Showing Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
+                <Text fontSize="sm">Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
                 <Spacer />
-                {!currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)}>Previous</Button>}
-                {currentPageeEquals1 && <Button onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
-                {!currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
-                {currentPageeEqualsLastPage && <Button onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
+                {!currentPageeEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)}>Previous</Button>}
+                {currentPageeEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
+                {!currentPageeEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
+                {currentPageeEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
             </HStack>
         </Box>
         )
@@ -83,46 +84,54 @@ const Home = () => {
     
       return (
         <Box>
-          <Heading>Home Page</Heading>
-          <Box marginBottom={'4'}>
-            <List spacing={'10'}>
-                <HStack>
-                    
-                    <Box>
-                        <Heading>Search</Heading>
-                        <Input placeholder='Search by title, description or location' onChange={handleSearch} value={searchTerm} />
-                    </Box>
-                    <Spacer />
-                    <Box>
-                    <Heading>Sector</Heading>
-                        <Select placeholder='Select' onChange={handleSector} value={sector} >
-                            <option value='Tribal Enterprise'>Tribal Enterprise</option>
-                            <option value='Government'>Government</option>
-                            <option value='Non-Profit Organization'>Non-Profit Organization</option>
-                            <option value='Private Sector'>Private Sector</option>
-                        </Select>
-                    </Box>
-                    <Spacer />
-                    <Box>
-                        <Heading>Work Type</Heading>
-                        <Select placeholder='Select' onChange={handleWorkType} value={workType} >
-                            <option value='Full Time'>Full Time</option>
-                            <option value='Part Time'>Part Time</option>
-                            <option value='Seasonal'>Seasonal</option>
-                            <option value='Contract'>Contract</option>
-                            <option value='Temporary'>Temporary</option>
-                        </Select>
-                    </Box>
-                </HStack>
-            </List>
-        </Box>
-        <Box>
-            {renderPages()}
-        </Box>
-        
-          <Box>
-          {renderJobs()}
+          <Box
+            borderBottom="1px"
+            borderColor="gray.300"
+            px={{ base: 4, md: 10 }}
+            py={{ base: 2, md: 4 }}
+            position="fixed"
+            bgColor="white"
+            top={{ base: 102, md: 128 }}
+            width="100%"
+          >
+            <SimpleGrid columns={{ base: 1, md: 4 }} gap={2} alignItems="end">
+              <Box>
+                  {/* <Text fontSize="sm">Search</Text> */}
+                  <InputGroup>
+                    <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.900' />} />
+                    <Input size="sm" placeholder='Search by title, employer or location' onChange={handleSearch} value={searchTerm} />
+                  </InputGroup>                  
+              </Box>
+              <HStack>
+              <Box width="100%">
+                    {/* <Text fontSize="sm">Sector</Text> */}
+                    <Select placeholder='All Sectors' onChange={handleSector} value={sector} size="sm" >
+                        <option value='Tribal Enterprise'>Tribal Enterprise</option>
+                        <option value='Government'>Government</option>
+                        <option value='Non-Profit Organization'>Non-Profit Organization</option>
+                        <option value='Private Sector'>Private Sector</option>
+                    </Select>
+                </Box>
+                <Box width="100%">
+                    {/* <Text fontSize="sm">Work Type</Text> */}
+                    <Select placeholder='All Work Type' onChange={handleWorkType} value={workType} size="sm" >
+                        <option value='Full Time'>Full Time</option>
+                        <option value='Part Time'>Part Time</option>
+                        <option value='Seasonal'>Seasonal</option>
+                        <option value='Contract'>Contract</option>
+                        <option value='Temporary'>Temporary</option>
+                    </Select>
+                </Box>
+              </HStack>        
+              <Box><Link fontSize="sm" color='blue.500'>Clear Search</Link></Box>             
+            </SimpleGrid>
+            <Box mt={2}>{renderPages()}</Box>            
           </Box>
+          <Box mt={{ base: "190px", md: "125px" }} pb={15}>          
+            <Box px={{ base: 4, md: 10 }} >
+              {renderJobs()}
+            </Box>
+          </Box>          
         </Box>
       )
 }

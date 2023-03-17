@@ -6,10 +6,11 @@ import App from "./App"
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
 import JobProvider from '../store/JobStore';
+import theme from '..//styles/theme';
 
 
 const Root = () => (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
         <JobProvider>
             <Router>
                 <App />
