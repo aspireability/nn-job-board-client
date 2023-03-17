@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Input, InputGroup, InputLeftElement, Link, List, Select, SimpleGrid, Spacer, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Link, HStack, Input, InputGroup, InputLeftElement, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
@@ -11,8 +11,13 @@ const Home = () => {
     const {
         jobs, 
         isFetchingJobs,
-        fetchJobs
+        fetchJobs,
+        allJobs,
+        currentPage,
+        movePage
       } = useJob() as JobContextValue;
+
+      
     
       const [searchTerm, setSearchTerm] = useState<string>('');
       const [workType, setWorkType] = useState<string>('');
@@ -31,6 +36,34 @@ const Home = () => {
         
         fetchJobs(filterOptions)
       }, [searchTerm, workType, sector]);
+
+      
+
+      const renderPages = () => {
+        if (allJobs === undefined || jobs === undefined) {
+          return null;
+        }
+
+        var currentPageeEquals1 = currentPage === 1;
+        var currentPageeEqualsLastPage = currentPage === Math.ceil(allJobs.length / 100);
+
+        var endCount = currentPageeEquals1 ? jobs.length : ((currentPage-1) * 100) + jobs.length;
+        var startCount = currentPageeEquals1 ? 1 : ((currentPage-1) * 100) + 1;
+
+        return (
+            
+        <Box>
+            <HStack>
+                <Text fontSize="sm">Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
+                <Spacer />
+                {!currentPageeEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)}>Previous</Button>}
+                {currentPageeEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
+                {!currentPageeEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
+                {currentPageeEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
+            </HStack>
+        </Box>
+        )
+      }
            
       const renderJobs = () => { 
         if (isFetchingJobs) {
@@ -55,7 +88,7 @@ const Home = () => {
             borderBottom="1px"
             borderColor="gray.300"
             px={{ base: 4, md: 10 }}
-            py={{ base: 4, md: 4 }}
+            py={{ base: 2, md: 4 }}
             position="fixed"
             bgColor="white"
             top={{ base: 102, md: 128 }}
@@ -92,8 +125,9 @@ const Home = () => {
               </HStack>        
               <Box><Link fontSize="sm" color='blue.500'>Clear Search</Link></Box>             
             </SimpleGrid>
+            <Box mt={2}>{renderPages()}</Box>            
           </Box>
-          <Box mt={{ base: "156px", md: "85px" }} pb={15}>          
+          <Box mt={{ base: "190px", md: "125px" }} pb={15}>          
             <Box px={{ base: 4, md: 10 }} >
               {renderJobs()}
             </Box>
