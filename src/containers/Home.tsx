@@ -1,9 +1,8 @@
 import { Box, Button, Link, HStack, Input, InputGroup, InputLeftElement, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
 import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
-import { IJob } from '../types/types';
 import { SearchIcon } from '@chakra-ui/icons'
 
 const Home = () => {

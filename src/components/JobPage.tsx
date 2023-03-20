@@ -1,8 +1,8 @@
-import { Box, Button, Heading, HStack, List, ListItem, VStack, Text, ListIcon, Image, Spacer, Link, SimpleGrid } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, List, VStack, Text, ListIcon, Image, Link, SimpleGrid } from '@chakra-ui/react'
 import { BsDash } from 'react-icons/bs'
 import React from 'react'
 import { IJob } from '../types/types'
-import { example } from '../mock_data/data'
+
 
 interface JobPageProps {
     job: IJob;
@@ -16,15 +16,16 @@ var jobHasClassification = job.classification !== '' && job.classification !== u
     
   return (
     <Box>
-       
+        <SimpleGrid columns={{ base: 1, md: 2 }} alignItems={'center'}>
         <Box>
             <Text fontWeight={'semibold'}>Job Title</Text>
             <Heading>{job.jobTitle}</Heading>
         </Box>
-        <SimpleGrid minChildWidth="300px" gap={{ base: 1, md: 5 }} columns={{base: 2, md: 5}} alignItems={'end'}>
+        </SimpleGrid>
         <VStack>
             <Box>
                 <HStack>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} alignItems={'end'}>
                     <Box>
                         <List spacing={'10'}>
                         <Box boxSize={'sm'}>
@@ -125,13 +126,13 @@ var jobHasClassification = job.classification !== '' && job.classification !== u
                             </Box>
                         </List>
                     </Box>
+                    </SimpleGrid>
                 </HStack>
             </Box>
             <Box>
-            <Link href={job.applicationLink} isExternal><Button colorScheme='blue' variant={'solid'} width={'xl'}>Apply Now</Button></Link>
+            <Link href={job.applicationLink} isExternal><Button colorScheme='blue' variant={'solid'} width={{ base: 'sm', md:'xl' }}>Apply Now</Button></Link>
             </Box>
-        </VStack>
-        </SimpleGrid>            
+        </VStack>           
     </Box>
   )
   

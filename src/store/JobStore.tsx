@@ -100,7 +100,7 @@ const JobProvider = ({ children }: any) => {
       }
 
       airtableApi('Job Listing Data').select({
-        view: 'NN Job Board Website View',
+        // view: 'NN Job Board Website View',
         filterByFormula
       }).eachPage(function page(records, fetchNextPage) {
           const transformedJobs = records.map((record: any) => {

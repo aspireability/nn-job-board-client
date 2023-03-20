@@ -1,5 +1,5 @@
 import { Box, Button, Text } from '@chakra-ui/react';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import JobPage from '../components/JobPage';
 import { JobContextValue, useJob } from '../store/JobStore';
@@ -31,10 +31,8 @@ const Job = () => {
       }
     
     return (
-        <Box 
-        // backgroundColor={'azure'}
-        >
-        <Button as={Link} to="/" colorScheme='blue'>Back to Home Page</Button>
+        <Box>
+        <Button as={Link} to="/" colorScheme='blue'  width={{ base: 'sm' }}>Back to Home Page</Button>
         <Box>
             <Box>{renderCurrentJob()}</Box>
         </Box>
