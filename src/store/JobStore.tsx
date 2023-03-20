@@ -52,7 +52,7 @@ export type JobContextValue = {
   currentJob: IJob | undefined;
   currentPage: number;
   movePage: (pageNumber: number) => void;
-  
+  searchQueries: String;
 }
 
 const JobContext = createContext<JobContextValue | undefined>(undefined);
@@ -67,6 +67,7 @@ const JobProvider = ({ children }: any) => {
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchQueries, setSearchQuery] = useState<String>('searchDetials');
 
 
   const fetchJobs = async (filterOptions: IFilterOptions) => {
@@ -99,6 +100,8 @@ const JobProvider = ({ children }: any) => {
       }
       else if (filterConstraints.length > 1) {
         filterByFormula = `AND(${filterConstraints.join(',')})`;
+        const autoSave = window.sessionStorage.getItem(filterByFormula);
+        setSearchQuery(autoSave as string);
       }
 
       airtableApi('Job Listing Data').select({
@@ -160,7 +163,8 @@ const JobProvider = ({ children }: any) => {
           fetchCurrentJob,
           currentJob,
           currentPage,
-          movePage
+          movePage,
+          searchQueries
       }}
     >
       {children}
