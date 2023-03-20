@@ -1,9 +1,8 @@
 import { Box, Button, Link, HStack, Input, InputGroup, InputLeftElement, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
 import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
-import { IJob } from '../types/types';
 import { SearchIcon } from '@chakra-ui/icons'
 
 const Home = () => {
@@ -37,6 +36,12 @@ const Home = () => {
         fetchJobs(filterOptions)
       }, [searchTerm, workType, sector]);
 
+      const clearFilter = () => {
+        setSearchTerm('');
+        setWorkType('');
+        setSector('');
+      }
+
       
 
       const renderPages = () => {
@@ -44,11 +49,11 @@ const Home = () => {
           return null;
         }
 
-        var currentPageeEquals1 = currentPage === 1;
-        var currentPageeEqualsLastPage = currentPage === Math.ceil(allJobs.length / 100);
+        var currentPageEquals1 = currentPage === 1;
+        var currentPageEqualsLastPage = currentPage === Math.ceil(allJobs.length / 100);
 
-        var endCount = currentPageeEquals1 ? jobs.length : ((currentPage-1) * 100) + jobs.length;
-        var startCount = currentPageeEquals1 ? 1 : ((currentPage-1) * 100) + 1;
+        var endCount = currentPageEquals1 ? jobs.length : ((currentPage-1) * 100) + jobs.length;
+        var startCount = currentPageEquals1 ? 1 : ((currentPage-1) * 100) + 1;
 
         return (
             
@@ -56,10 +61,10 @@ const Home = () => {
             <HStack>
                 <Text fontSize="sm">Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
                 <Spacer />
-                {!currentPageeEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)}>Previous</Button>}
-                {currentPageeEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
-                {!currentPageeEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
-                {currentPageeEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
+                {!currentPageEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)}>Previous</Button>}
+                {currentPageEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
+                {!currentPageEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
+                {currentPageEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
             </HStack>
         </Box>
         )
@@ -123,7 +128,7 @@ const Home = () => {
                     </Select>
                 </Box>
               </HStack>        
-              <Box><Link fontSize="sm" color='blue.500'>Clear Search</Link></Box>             
+              <Box><Link fontSize="sm" color='blue.500' onClick={clearFilter} >Clear Search</Link></Box>             
             </SimpleGrid>
             <Box mt={2}>{renderPages()}</Box>            
           </Box>

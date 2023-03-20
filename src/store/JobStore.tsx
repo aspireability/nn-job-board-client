@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 import { airtableApi } from '../api/airtableApi';
 import { get as lodashGet } from 'lodash';
 import { IJob } from '../types/types';
+import { capitalize } from 'lodash';
 
 const transformAirtableRecord = (airtableRecord: any): IJob => {
   const job: IJob = {
@@ -9,7 +10,7 @@ const transformAirtableRecord = (airtableRecord: any): IJob => {
     jobTitle: airtableRecord['fields']['Job Title'],
     jobDescription: airtableRecord['fields']['Job Description'],
     jobDescriptionUpload: lodashGet(airtableRecord, 'fields.Job Description Document (Upload).0.url'),
-    jobDescriptionUploadThumbnail: lodashGet(airtableRecord, 'fields.Job Description Document (Upload).0.thumnails.large.url'),
+    jobDescriptionUploadThumbnail: lodashGet(airtableRecord, 'fields.Job Description Document (Upload).0.thumbnails.large.url'),
     employer: airtableRecord['fields']['Employer'],
     sector: airtableRecord['fields']['Sector'],
     workType: airtableRecord['fields']['Work Type'],
@@ -77,8 +78,9 @@ const JobProvider = ({ children }: any) => {
 
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
-        const columnsToSearch = ['Job Title', 'Job Description', 'Location'];
-        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}',{${column}})`);        
+        const columnsToSearch = ['Job Title', 'Employer', 'Location'];
+        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}',{${column}})`);
+        // const caseInsensitiveSearchQueries = columnsToSearch.map((column: string) => `SEARCH('${capitalize(filterOptions.searchTerm)}',{${column}})`);        
         const combinedSearch = `OR(${searchQueries.join(',')})`;
         console.log('combinedSearch', combinedSearch);
         filterConstraints.push(combinedSearch);
