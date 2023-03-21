@@ -52,7 +52,7 @@ export type JobContextValue = {
   currentJob: IJob | undefined;
   currentPage: number;
   movePage: (pageNumber: number) => void;
-  searchQueries: String;
+  currentFilterOptions: IFilterOptions | undefined;
 }
 
 const JobContext = createContext<JobContextValue | undefined>(undefined);
@@ -67,17 +67,7 @@ const JobProvider = ({ children }: any) => {
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchQueries, setSearchQueries] = useState<String>('searchDetails');
-
-  useEffect(() => {
-    const searchData = window.localStorage.getItem('searchDetails');
-    if (searchData !==  null ) setSearchQueries(JSON.parse(searchData))
-  }, [])
-
-
-  useEffect(() => {
-    window.localStorage.setItem('searchDetails', JSON.stringify(currentPage))
-  })
+  const [currentFilterOptions, setCurrentFilterOptions] = useState<IFilterOptions | undefined>();
 
 
   const fetchJobs = async (filterOptions: IFilterOptions) => {
@@ -86,6 +76,7 @@ const JobProvider = ({ children }: any) => {
 
       setIsFetchingJobs(true);
       setIsFetchingAllJobs(true);
+      setCurrentFilterOptions(filterOptions)
 
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
@@ -135,7 +126,7 @@ const JobProvider = ({ children }: any) => {
       }, function done(err) {
         console.log('retrieved all jobs', allJobsCollector.length)
         setAllJobs(allJobsCollector)
-        setIsFetchingAllJobs(false); 
+        setIsFetchingAllJobs(false);
       });
   }
 
@@ -176,7 +167,7 @@ const JobProvider = ({ children }: any) => {
           currentJob,
           currentPage,
           movePage,
-          searchQueries
+          currentFilterOptions
       }}
     >
       {children}

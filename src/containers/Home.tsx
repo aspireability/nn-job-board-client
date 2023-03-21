@@ -13,14 +13,13 @@ const Home = () => {
         fetchJobs,
         allJobs,
         currentPage,
-        movePage
+        movePage,
+        currentFilterOptions
       } = useJob() as JobContextValue;
 
-      
-    
-      const [searchTerm, setSearchTerm] = useState<string>('');
-      const [workType, setWorkType] = useState<string>('');
-      const [sector, setSector] = useState<string>('');
+      const [searchTerm, setSearchTerm] = useState<string>(currentFilterOptions?.searchTerm || '');
+      const [workType, setWorkType] = useState<string>(currentFilterOptions?.workType || '');
+      const [sector, setSector] = useState<string>(currentFilterOptions?.sector || '');
 
       const handleSearch = (event: any) => {setSearchTerm(event.target.value)};
       const handleWorkType = (event: any) => {setWorkType(event.target.value)};
