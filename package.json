@@ -2,7 +2,7 @@
   "name": "kibo-jobboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/nn-job-board-client",
+  "homepage": "./",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.1",
