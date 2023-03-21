@@ -2,6 +2,7 @@
   "name": "kibo-jobboard",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.1",
@@ -33,6 +34,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "deploy": "react-scripts build && gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -80,6 +82,7 @@
     "@storybook/react": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
     "webpack": "^5.75.0"
   }
