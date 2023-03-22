@@ -81,8 +81,7 @@ const JobProvider = ({ children }: any) => {
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
         const columnsToSearch = ['Job Title', 'Employer', 'Location'];
-        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}',{${column}})`);
-        // const caseInsensitiveSearchQueries = columnsToSearch.map((column: string) => `SEARCH('${capitalize(filterOptions.searchTerm)}',{${column}})`);        
+        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}', LOWER({${column}}))`);
         const combinedSearch = `OR(${searchQueries.join(',')})`;
         console.log('combinedSearch', combinedSearch);
         filterConstraints.push(combinedSearch);
@@ -101,9 +100,6 @@ const JobProvider = ({ children }: any) => {
       }
       else if (filterConstraints.length > 1) {
         filterByFormula = `AND(${filterConstraints.join(',')})`;
-        // setSearchQueries(filterByFormula)
-        // const autoSave = window.sessionStorage.getItem(filterByFormula);
-        // setSearchQuery(autoSave as string);
       }
 
       airtableApi('Job Listing Data').select({
@@ -127,6 +123,7 @@ const JobProvider = ({ children }: any) => {
         console.log('retrieved all jobs', allJobsCollector.length)
         setAllJobs(allJobsCollector)
         setIsFetchingAllJobs(false);
+        setCurrentPage(1)
       });
   }
 
