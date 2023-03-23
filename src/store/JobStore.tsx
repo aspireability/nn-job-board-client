@@ -81,7 +81,7 @@ const JobProvider = ({ children }: any) => {
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
         const columnsToSearch = ['Job Title', 'Employer', 'Location'];
-        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}', LOWER({${column}}))`);
+        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}', {${column}})`);
         const combinedSearch = `OR(${searchQueries.join(',')})`;
         console.log('combinedSearch', combinedSearch);
         filterConstraints.push(combinedSearch);
