@@ -74,6 +74,11 @@ const JobProvider = ({ children }: any) => {
       // if jobs is not undefined (means we have a previous load)
       // and incoming filter options has not changed from current filter options
       // then return
+      if (jobs !== undefined && 
+        (currentFilterOptions?.searchTerm && currentFilterOptions?.sector && currentFilterOptions?.workType)) {
+        return
+      }
+
 
       // Initialize and set fetching trackers
       let fetchedFirstPage = false;
