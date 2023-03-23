@@ -71,6 +71,11 @@ const JobProvider = ({ children }: any) => {
 
 
   const fetchJobs = async (filterOptions: IFilterOptions) => {
+      // if jobs is not undefined (means we have a previous load)
+      // and incoming filter options has not changed from current filter options
+      // then return
+
+      // Initialize and set fetching trackers
       let fetchedFirstPage = false;
       let allJobsCollector: IJob[] = [];
 
@@ -78,6 +83,7 @@ const JobProvider = ({ children }: any) => {
       setIsFetchingAllJobs(true);
       setCurrentFilterOptions(filterOptions)
 
+      // Build filter query
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
         const columnsToSearch = ['Job Title', 'Employer', 'Location'];
@@ -92,7 +98,6 @@ const JobProvider = ({ children }: any) => {
       if (filterOptions.sector) {
         filterConstraints.push(`{Sector}='${filterOptions.sector}'`)
       }
-      // TODO sector
 
       let filterByFormula = ''
       if (filterConstraints.length === 1) {
@@ -102,6 +107,7 @@ const JobProvider = ({ children }: any) => {
         filterByFormula = `AND(${filterConstraints.join(',')})`;
       }
 
+      // Query API
       airtableApi('Job Listing Data').select({
         view: 'NN Job Board Website View',
         filterByFormula
