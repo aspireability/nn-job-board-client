@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { airtableApi } from '../api/airtableApi';
 import { get as lodashGet } from 'lodash';
 import { IJob } from '../types/types';
@@ -52,7 +52,7 @@ export type JobContextValue = {
   currentJob: IJob | undefined;
   currentPage: number;
   movePage: (pageNumber: number) => void;
-  
+  currentFilterOptions: IFilterOptions | undefined;
 }
 
 const JobContext = createContext<JobContextValue | undefined>(undefined);
@@ -67,20 +67,36 @@ const JobProvider = ({ children }: any) => {
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentFilterOptions, setCurrentFilterOptions] = useState<IFilterOptions | undefined>();
 
 
   const fetchJobs = async (filterOptions: IFilterOptions) => {
+      // if jobs is not undefined (means we have a previous load)
+      // and incoming filter options has not changed from current filter options
+      // then return
+      if (jobs !== undefined && currentFilterOptions !== undefined) {
+        if (filterOptions.searchTerm === currentFilterOptions.searchTerm 
+            && filterOptions.sector === currentFilterOptions.sector 
+            && filterOptions.workType === currentFilterOptions.workType) {
+                return
+        }
+      } 
+
+
+
+      // Initialize and set fetching trackers
       let fetchedFirstPage = false;
       let allJobsCollector: IJob[] = [];
 
       setIsFetchingJobs(true);
       setIsFetchingAllJobs(true);
+      setCurrentFilterOptions(filterOptions)
 
+      // Build filter query
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
         const columnsToSearch = ['Job Title', 'Employer', 'Location'];
-        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}',{${column}})`);
-        // const caseInsensitiveSearchQueries = columnsToSearch.map((column: string) => `SEARCH('${capitalize(filterOptions.searchTerm)}',{${column}})`);        
+        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}', {${column}})`);
         const combinedSearch = `OR(${searchQueries.join(',')})`;
         console.log('combinedSearch', combinedSearch);
         filterConstraints.push(combinedSearch);
@@ -91,7 +107,6 @@ const JobProvider = ({ children }: any) => {
       if (filterOptions.sector) {
         filterConstraints.push(`{Sector}='${filterOptions.sector}'`)
       }
-      // TODO sector
 
       let filterByFormula = ''
       if (filterConstraints.length === 1) {
@@ -101,6 +116,7 @@ const JobProvider = ({ children }: any) => {
         filterByFormula = `AND(${filterConstraints.join(',')})`;
       }
 
+      // Query API
       airtableApi('Job Listing Data').select({
         view: 'NN Job Board Website View',
         filterByFormula
@@ -121,7 +137,8 @@ const JobProvider = ({ children }: any) => {
       }, function done(err) {
         console.log('retrieved all jobs', allJobsCollector.length)
         setAllJobs(allJobsCollector)
-        setIsFetchingAllJobs(false); 
+        setIsFetchingAllJobs(false);
+        setCurrentPage(1)
       });
   }
 
@@ -148,6 +165,7 @@ const JobProvider = ({ children }: any) => {
       });       
   }
 
+
   return (
     <JobContext.Provider
       value={{
@@ -160,7 +178,8 @@ const JobProvider = ({ children }: any) => {
           fetchCurrentJob,
           currentJob,
           currentPage,
-          movePage
+          movePage,
+          currentFilterOptions
       }}
     >
       {children}
