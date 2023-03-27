@@ -94,15 +94,13 @@ const Home = () => {
       }
     
       return (
-        <Box>
+        <>
           <Box
             borderBottom="1px"
             borderColor="gray.300"
             px={{ base: 4, md: 10 }}
             py={{ base: 2, md: 4 }}
-            position="fixed"
             bgColor="white"
-            top={{ base: 102, md: 128 }}
             width="100%"
           >
             <SimpleGrid columns={{ base: 1, md: 4 }} gap={2} alignItems="end">
@@ -136,14 +134,21 @@ const Home = () => {
               </HStack>        
               <Box><Link fontSize="sm" color='blue.500' onClick={clearFilter} >Clear Search</Link></Box>             
             </SimpleGrid>
-            <Box mt={2}>{renderPages()}</Box>         
           </Box>
-          <Box mt={{ base: 175, md: 125 }} pb={15}>          
-            <Box px={{ base: 4, md: 10 }} >
+          <Box flexGrow="1" overflow="auto" pb={15}>          
+            <Box px={{ base: 4, md: 10 }} py={{ base: 2, md: 4 }} >
               {renderJobs()}
             </Box>
-          </Box>          
-        </Box>
+          </Box>
+          <Box
+            px={{ base: 4, md: 10 }}
+            py={{ base: 2, md: 4 }}
+            borderTop="1px"
+            borderColor="gray.300"
+          >
+            {renderPages()}
+          </Box>       
+        </>
       )
 }
 
