@@ -80,9 +80,7 @@ const JobProvider = ({ children }: any) => {
             && filterOptions.workType === currentFilterOptions.workType) {
                 return
         }
-      } 
-
-
+      }
 
       // Initialize and set fetching trackers
       let fetchedFirstPage = false;
@@ -95,8 +93,9 @@ const JobProvider = ({ children }: any) => {
       // Build filter query
       const filterConstraints = [];
       if (filterOptions.searchTerm) {
-        const columnsToSearch = ['Job Title', 'Employer', 'Location'];
-        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${filterOptions.searchTerm}', {${column}})`);
+        const lowerCaseSearchTerm = filterOptions.searchTerm.toLowerCase();
+        const columnsToSearch = ['Job Title', 'Location'];
+        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${lowerCaseSearchTerm}', LOWER({${column}}))`);
         const combinedSearch = `OR(${searchQueries.join(',')})`;
         console.log('combinedSearch', combinedSearch);
         filterConstraints.push(combinedSearch);

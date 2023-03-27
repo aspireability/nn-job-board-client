@@ -1,4 +1,4 @@
-import { Box, Button, Link, HStack, Input, InputGroup, InputLeftElement, Select, SimpleGrid, Spacer, Text } from '@chakra-ui/react';
+import { Box, Button, Link, HStack, Input, InputGroup, InputLeftElement, Select, SimpleGrid, Spacer, Text, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
@@ -45,7 +45,11 @@ const Home = () => {
 
       const renderPages = () => {
         if (allJobs === undefined || jobs === undefined) {
-          return null;
+          return (
+            <Box>
+              <Text fontSize="sm">Loading pages ...</Text>
+            </Box>
+          );
         }
 
         var currentPageEquals1 = currentPage === 1;
@@ -58,12 +62,10 @@ const Home = () => {
             
         <Box>
             <HStack>
-                <Text fontSize="sm">Jobs {startCount}-{endCount} of {allJobs.length} results</Text>
+                <Text fontSize="sm">Jobs {startCount}-{endCount} of {allJobs.length}</Text>
                 <Spacer />
-                {!currentPageEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)}>Previous</Button>}
-                {currentPageEquals1 && <Button size="sm" onClick={() => movePage(currentPage - 1)} isDisabled>Previous</Button>}
-                {!currentPageEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'}>Next</Button>}
-                {currentPageEqualsLastPage && <Button size="sm" onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled >Next</Button>}
+                <Button size={{ base: 'xs', md: 'sm' }} onClick={() => movePage(currentPage - 1)} isDisabled={currentPageEquals1}>Previous</Button>
+                <Button size={{ base: 'xs', md: 'sm' }} onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled={currentPageEqualsLastPage}>Next</Button>
             </HStack>
         </Box>
         )
@@ -71,7 +73,12 @@ const Home = () => {
            
       const renderJobs = () => { 
         if (isFetchingJobs) {
-          return <Text>Loading ...</Text>
+          return (
+            <HStack>
+              <Spinner />
+              <Text>Loading Jobs</Text>
+            </HStack>            
+          )
         }
     
         if (jobs === undefined) {
@@ -103,7 +110,7 @@ const Home = () => {
                   {/* <Text fontSize="sm">Search</Text> */}
                   <InputGroup>
                     <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.900' />} />
-                    <Input size="sm" placeholder='Search by title, employer or location' onChange={handleSearch} value={searchTerm} />
+                    <Input size="sm" placeholder='Search by title or location' onChange={handleSearch} value={searchTerm} />
                   </InputGroup>                  
               </Box>
               <HStack>
@@ -129,9 +136,9 @@ const Home = () => {
               </HStack>        
               <Box><Link fontSize="sm" color='blue.500' onClick={clearFilter} >Clear Search</Link></Box>             
             </SimpleGrid>
-            <Box mt={2}>{renderPages()}</Box>            
+            <Box mt={2}>{renderPages()}</Box>         
           </Box>
-          <Box mt={{ base: "190px", md: "125px" }} pb={15}>          
+          <Box mt={{ base: 175, md: 125 }} pb={15}>          
             <Box px={{ base: 4, md: 10 }} >
               {renderJobs()}
             </Box>
