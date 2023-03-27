@@ -15,7 +15,7 @@ import { Box, Center, Flex, Heading, HStack, Link, Spacer, Stack, Text, VStack }
 const App = () => {
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
-      <Box backgroundColor="blue.900" py={2} position="fixed" top="0" width="100%" height={{ base: "102px", md: "128px" }} >
+      <Box backgroundColor="blue.900" py={2}>
         <Box backgroundColor="yellow.400" py={2} w="100%">
           <Center color="white" backgroundColor="red.800" py={2} w="100%">
             <VStack>
@@ -25,7 +25,7 @@ const App = () => {
           </Center>
         </Box>
       </Box>
-      <Box flexGrow="1" overflow="auto" mt={{ base: "102px", md: "128px" }}>
+      <Box flexGrow="1" display="flex" flexDirection="column" overflow="auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/job/:jobId" element={<Job />} />
