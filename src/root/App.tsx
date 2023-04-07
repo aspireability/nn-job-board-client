@@ -19,7 +19,7 @@ const App = () => {
         <Box backgroundColor="yellow.400" py={2} w="100%">
           <Center color="white" backgroundColor="red.800" py={2} w="100%">
             <VStack>
-              <Heading fontSize={{ base: 'lg', md: '4xl' }}>K’oo Naanish Holo - There ARE Jobs HERE</Heading>
+              <Heading fontSize={{ base: 'lg', md: '4xl' }}>Kǫ́ǫ́ Naanish Hólǫ́ - There ARE Jobs HERE</Heading>
               <Heading fontSize={{ base: 'md', md: '2xl' }}>Official Job Board of the Navajo Nation</Heading>
             </VStack>
           </Center>
