@@ -9,6 +9,7 @@ import logo from './logo.svg';
 
 import { Route, Routes } from 'react-router-dom';
 import Home from '../containers/Home';
+import Jobs from '../containers/Jobs';
 import Job from '../containers/Job';
 import { Box, Center, Flex, Heading, HStack, Link, Spacer, Stack, Text, VStack } from '@chakra-ui/react'
 
@@ -27,7 +28,8 @@ const App = () => {
       </Box>
       <Box flexGrow="1" display="flex" flexDirection="column" overflow="auto">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path='/' element={<Home />} />
+          <Route path="/jobs" element={<Jobs />} />
           <Route path="/job/:jobId" element={<Job />} />
         </Routes>
       </Box>
