@@ -8,24 +8,34 @@ import React from 'react';
 import logo from './logo.svg';
 
 import { Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Home from '../containers/Home';
 import Jobs from '../containers/Jobs';
 import Job from '../containers/Job';
-import { Box, Center, Flex, Heading, HStack, Link, Spacer, Stack, Text, VStack } from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, HStack, Link, Spacer, Image, Text, VStack } from '@chakra-ui/react'
 
 const App = () => {
+  const navigate = useNavigate();
+
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
-      <Box backgroundColor="blue.900" py={2}>
-        <Box backgroundColor="yellow.400" py={2} w="100%">
-          <Center color="white" backgroundColor="red.800" py={2} w="100%">
-            <VStack>
-              <Heading fontSize={{ base: 'lg', md: '4xl' }}>Kǫ́ǫ́ Naanish Hólǫ́ - There ARE Jobs HERE</Heading>
-              <Heading fontSize={{ base: 'md', md: '2xl' }}>Official Job Board of the Navajo Nation</Heading>
-            </VStack>
-          </Center>
-        </Box>
-      </Box>
+      <HStack
+        px={{ base: 4, md: 10 }}
+        py={{ base: 2, md: 4 }}
+        gap={2}
+        borderBottom="1px solid"
+        borderColor="blue.900"
+        // boxShadow="md"
+      >
+        <Image
+          boxSize={{ base: '40px', md: '75px' }}
+          src='./navajoSeal_SiteLogo_only.png'
+          alt='Navajo Nation Seal'
+          onClick={() => navigate('/')}
+          cursor="pointer"
+        />
+        <Heading fontSize={{ base: 'lg', md: '3xl' }}>Navajo Nation Job Board</Heading>
+      </HStack>      
       <Box flexGrow="1" display="flex" flexDirection="column" overflow="auto">
         <Routes>
           <Route path='/' element={<Home />} />

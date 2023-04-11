@@ -69,7 +69,7 @@ const Home = () => {
         <Box>
             <HStack>
             {currentJobsFilterCount === 0 ? (
-                  <Text fontSize="sm">No jobs found matching your search.</Text>  
+                  <Text fontSize="sm">No jobs found.</Text>  
                 ) : (
                   <Text fontSize="sm">Jobs {startCount}-{endCount} of {currentJobsFilterCount}</Text>
                 )}
@@ -109,7 +109,7 @@ const Home = () => {
             borderBottom="1px"
             borderColor="gray.300"
             px={{ base: 4, md: 10 }}
-            py={{ base: 2, md: 4 }}
+            py={{ base: 3, md: 4 }}
             bgColor="white"
             width="100%"
           >
@@ -127,7 +127,7 @@ const Home = () => {
                   </HStack>                                    
               </Box>
               <HStack>
-              <Box width="100%">
+                <Box width="100%">
                     {/* <Text fontSize="sm">Sector</Text> */}
                     <Select placeholder='All Sectors' onChange={handleSector} value={sector} size="sm" >
                         <option value='Tribal Enterprise'>Tribal Enterprise</option>
@@ -150,8 +150,8 @@ const Home = () => {
               <Box><Link fontSize="sm" color='blue.500' onClick={clearFilter} >Clear Search</Link></Box>             
             </SimpleGrid>
           </Box>
-          <Box flexGrow="1" overflow="auto" pb={15}>          
-            <Box px={{ base: 4, md: 10 }} py={{ base: 2, md: 4 }} >
+          <Box flexGrow="1" overflow="auto" pb={15} bgColor="#FAFAFA">          
+            <Box px={{ base: 4, md: 10 }} py={{ base: 3, md: 4 }} >
               {renderJobs()}
             </Box>
           </Box>
