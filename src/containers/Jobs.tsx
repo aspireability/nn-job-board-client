@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import HomePage from '../components/HomePage';
 import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
 import { SearchIcon } from '@chakra-ui/icons'
+import { Icon } from '@chakra-ui/react';
+import { MdOutlineLocationOn } from 'react-icons/md';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -17,26 +19,30 @@ const Home = () => {
         currentFilterOptions
       } = useJob() as JobContextValue;
 
-      const [searchTerm, setSearchTerm] = useState<string>(currentFilterOptions?.searchTerm || '');
+      const [jobTitle, setJobTitle] = useState<string>(currentFilterOptions?.jobTitle || '');
+      const [location, setLocation] = useState<string>(currentFilterOptions?.location || '');
       const [workType, setWorkType] = useState<string>(currentFilterOptions?.workType || '');
       const [sector, setSector] = useState<string>(currentFilterOptions?.sector || '');
 
-      const handleSearch = (event: any) => {setSearchTerm(event.target.value)};
+      const handleJobTitle = (event: any) => {setJobTitle(event.target.value)};
+      const handleLocation = (event: any) => {setLocation(event.target.value)};
       const handleWorkType = (event: any) => {setWorkType(event.target.value)};
       const handleSector = (event: any) => {setSector(event.target.value)};
 
       useEffect(() => {
         const filterOptions: IFilterOptions = {};
-        if (searchTerm !== '') filterOptions.searchTerm = searchTerm;
+        if (jobTitle !== '') filterOptions.jobTitle = jobTitle;
+        if (location !== '') filterOptions.location = location;
         if (workType !== '') filterOptions.workType = workType;
         if (sector !== '') filterOptions.sector = sector;
         // TODO work type, sector
         
         fetchJobs(filterOptions)
-      }, [searchTerm, workType, sector]);
+      }, [jobTitle, location, workType, sector]);
 
       const clearFilter = () => {
-        setSearchTerm('');
+        setJobTitle('');
+        setLocation('');
         setWorkType('');
         setSector('');
       }
@@ -109,11 +115,16 @@ const Home = () => {
           >
             <SimpleGrid columns={{ base: 1, md: 4 }} gap={2} alignItems="end">
               <Box>
-                  {/* <Text fontSize="sm">Search</Text> */}
-                  <InputGroup>
-                    <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.900' />} />
-                    <Input size="sm" placeholder='Search by title or location' onChange={handleSearch} value={searchTerm} />
-                  </InputGroup>                  
+                  <HStack>
+                    <InputGroup>
+                      <InputLeftElement mt="-1" pointerEvents='none' children={<SearchIcon color='gray.900' />} />
+                      <Input size="sm" placeholder='Search Job Title' onChange={handleJobTitle} value={jobTitle} />                    
+                    </InputGroup>
+                    <InputGroup>
+                      <InputLeftElement mt="-1" pointerEvents='none' children={<Icon as={MdOutlineLocationOn} color='gray.900' />} />
+                      <Input size="sm" placeholder='Search Location' onChange={handleLocation} value={location} />
+                    </InputGroup>
+                  </HStack>                                    
               </Box>
               <HStack>
               <Box width="100%">

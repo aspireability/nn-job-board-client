@@ -34,7 +34,8 @@ const transformDirectusRecord = (directusRecord: any): IJob => {
 }
 
 export interface IFilterOptions {
-  searchTerm?: string,
+  jobTitle?: string,
+  location?: string,
   workType?: string,
   sector?: string,
 }
@@ -71,7 +72,7 @@ const JobProvider = ({ children }: any) => {
       // AND incoming filter options has not changed from current filter options
       // then return
       if (jobs !== undefined) {
-        if (filterOptions.searchTerm === currentFilterOptions.searchTerm 
+        if (filterOptions.jobTitle === currentFilterOptions.jobTitle 
             && filterOptions.sector === currentFilterOptions.sector 
             && filterOptions.workType === currentFilterOptions.workType
             && pageNumber === currentPage) {
@@ -91,15 +92,23 @@ const JobProvider = ({ children }: any) => {
         page: pageNumber,
       };
 
-      if (filterOptions.searchTerm) {
-        directusQuery['filter']['Job_Title']={ '_contains': filterOptions.searchTerm };
-        // directusQuery['filter']['Location']={ '_contains': filterOptions.searchTerm };        
+      const filterCollector: any[] = [];
+
+      if (filterOptions.jobTitle) {
+        filterCollector.push({ 'Job_Title': { '_contains': filterOptions.jobTitle }})        
+      }
+      if (filterOptions.location) {
+        filterCollector.push({ 'Location': { '_contains': filterOptions.location }})
       }
       if (filterOptions.workType) {
-        directusQuery['filter']['Work_Type']=filterOptions.workType;
+        filterCollector.push({ 'Work_Type': { '_eq': filterOptions.workType }})
       }
       if (filterOptions.sector) {
-        directusQuery['filter']['Sector']=filterOptions.sector;
+        filterCollector.push({ 'Sector': { '_eq': filterOptions.sector }})
+      }
+
+      if (filterCollector.length > 0) {
+        directusQuery['filter']['_and']=filterCollector;
       }
 
       // Query API
