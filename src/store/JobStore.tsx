@@ -95,10 +95,10 @@ const JobProvider = ({ children }: any) => {
       const filterCollector: any[] = [];
 
       if (filterOptions.jobTitle) {
-        filterCollector.push({ 'Job_Title': { '_contains': filterOptions.jobTitle }})        
+        filterCollector.push({ 'Job_Title': { '_icontains': filterOptions.jobTitle }})        
       }
       if (filterOptions.location) {
-        filterCollector.push({ 'Location': { '_contains': filterOptions.location }})
+        filterCollector.push({ 'Location': { '_icontains': filterOptions.location }})
       }
       if (filterOptions.workType) {
         filterCollector.push({ 'Work_Type': { '_eq': filterOptions.workType }})
