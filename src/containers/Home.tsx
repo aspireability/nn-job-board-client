@@ -1,8 +1,8 @@
-import { Box, Button, Image, Heading, Text, VStack, SimpleGrid } from "@chakra-ui/react"
+import { Box, Button, Center, Heading, Text, VStack, SimpleGrid } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
 import { Icon } from '@chakra-ui/react';
 import { MdOutlinePersonSearch, MdOutlineMap } from 'react-icons/md';
-import { HiOutlineFilter }  from 'react-icons/hi';
+import { HiOutlineFilter, HiOutlineDatabase }  from 'react-icons/hi';
 
 const Home = () => {
     const path = '/jobs'
@@ -50,7 +50,7 @@ const Home = () => {
     const renderFeatures = () => {
       return (
         <SimpleGrid
-          columns={{ base: 1, md: 3 }}
+          columns={{ base: 1, md: 4 }}
           px={{ base: 4, md: 12 }}
           py={{ base: 10, md: 16 }}
           spacing={{ base: 10, md: 12 }}
@@ -58,7 +58,8 @@ const Home = () => {
         >
           {renderFeatureSection(MdOutlinePersonSearch, 'Curated For Navajos', 'A collection of job openings built specifically for the people of the great Navajo Nation.')}
           {renderFeatureSection(MdOutlineMap, 'In The Navajo Nation', 'Employment opportunities for Navajos inside the Navajo Nation.')}
-          {renderFeatureSection(HiOutlineFilter, 'All In One Place', 'A comprehensive collection of all Government and Private job listings available in the Navajo Nation')}
+          {renderFeatureSection(HiOutlineDatabase, 'All In One Place', 'A comprehensive collection of all Government and Private job listings available in the Navajo Nation')}
+          {renderFeatureSection(HiOutlineFilter, 'Getting Started', 'Click on Explore Jobs button above to see all available jobs. Then use the search and filter options at the top to narrow down the list to your desired criteria.')}
         </SimpleGrid>
       )
     }
@@ -68,18 +69,20 @@ const Home = () => {
         <Box
           px={{ base: 4, md: 12 }}
           py={{ base: 7, md: 12 }}
+          textAlign="center"
         >
           <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="gray.600" fontWeight="bold">DISCLAIMER ON ACCURACY AND COMPLETENESS OF INFORMATION</Text>
           <Text fontSize={{ base: 'sm', md: 'md' }}>While the we use reasonable efforts to provide accurate and up-to-date information, some of the information provided is gathered or provided by third parties and has not been independently verified by us. In addition, the information contained on this site has been compiled from a variety of sources and is subject to change without notice. Data can also quickly become out of-date. By using this site, you agree that we will not be held liable for any errors or omissions contained in the information provided. Although the information found on this site has been produced and processed from sources believed to be reliable, no warranty, express or implied, is made regarding accuracy, adequacy, completeness, legality, reliability or usefulness of any information. We provide this information on an “as is” basis and expressly disclaim any and all warranties, express and implied, with respect thereto. This disclaimer applies to both isolated and aggregate uses of information.</Text>
         </Box>
       )
     }
+
     return (
       <Box        
       >
         {renderHero()}
         {renderFeatures()}
-        {renderDisclaimer()}
+        {renderDisclaimer()}        
       </Box>
       )
 }
