@@ -1,13 +1,15 @@
 import { Box, Button, Heading, HStack, Text, Image, Link, SimpleGrid } from '@chakra-ui/react'
-import { BsDash } from 'react-icons/bs'
 import React from 'react'
-import { IJob } from '../types/types'
+import { DownloadIcon } from '@chakra-ui/icons'
+import { IJob, IJobFile } from '../types/types'
 import { colorSchemes, locationTypeOptions, sectorOptions, workTypeOptions } from '../util/jobPropertyOptions';
 import { renderTag } from '../util/tags';
 
 interface JobPageProps {
     job: IJob;
 }
+
+const baseUrl = process.env.REACT_APP_DIRECTUS_URL as string;
 
 const JobPage = ({
     job
@@ -30,16 +32,42 @@ const JobPage = ({
     )
   }
 
+  const renderJobDescriptionFiles = () => {
+    if (!job.jobDescriptionUpload || job.jobDescriptionUpload.length === 0) {
+      return (
+        <Text fontSize={{ base: 'ld', md: 'xl' }}>N/A</Text>
+      )
+    }
+
+    return (
+      <HStack>
+        {job.jobDescriptionUpload.map((file: IJobFile) => {
+          const fileUrl = `${baseUrl}/assets/${file.fileId}`;
+          const thumbnailUrl = `${fileUrl}?key=thumb`;
+          const downloadUrl = `${fileUrl}?download`;
+          return (
+            <Box>
+              <Link href={fileUrl} cursor="pointer" isExternal={true}>
+                <Image boxSize={{ base: '50px', md: '100px' }} src={thumbnailUrl} alt={file.fileName} border="2px solid" borderColor="gray.400" />              
+              </Link>
+              <Link href={downloadUrl} cursor="pointer" fontSize={{ base: 'sm' }} color='blue.600'>
+                <DownloadIcon /> Download
+              </Link>
+            </Box>            
+          )
+        })}        
+      </HStack>
+    )
+  }
+
   return (
     <Box>
       <SimpleGrid columns={{ base: 1, md: 1 }}>
         <Heading mb={{ base: 2, md: 5 }}>{job.jobTitle}</Heading>
         {renderProperty('Job Description', job.jobDescription)}
         <Box mb={3}>
-          {renderLabel('Job Description Document (Click to Expand)')}
-          <Link href={job.jobDescriptionUpload}>
-            <Image boxSize={{ base: '25px', md: '50px' }} src={job.jobDescriptionUploadThumbnail} alt={job.jobTitle} />
-          </Link>
+          {renderLabel('Job Description Document (Click to view)')}
+          {renderJobDescriptionFiles()}
         </Box>
         {renderProperty('Employer', job.employer)}
         {renderProperty('Sector', job.sector, true, sectorOptions)}

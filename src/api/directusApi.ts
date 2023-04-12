@@ -14,8 +14,13 @@ export class DirectusInstance {
     return response;
   }
 
-  async getOne(collectionName: string, id: string): Promise<any> {
-    const response = await this.instance.items(collectionName).readOne(id);
+  async getManyById(collectionName: string, ids: string[]): Promise<any> {
+    const response = await this.instance.items(collectionName).readMany(ids);
+    return response;
+  }
+
+  async getOne(collectionName: string, id: string, query: any): Promise<any> {
+    const response = await this.instance.items(collectionName).readOne(id, query);
     return response;
   }
 

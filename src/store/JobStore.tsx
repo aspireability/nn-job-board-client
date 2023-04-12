@@ -6,9 +6,7 @@ const transformDirectusRecord = (directusRecord: any): IJob => {
   const job: IJob = {
     id: directusRecord['id'],
     jobTitle: directusRecord['Job_Title'],
-    jobDescription: directusRecord['Job_Description'],
-    // jobDescriptionUpload: lodashGet(directusRecord, 'fields.Job Description Document (Upload).0.url'),
-    // jobDescriptionUploadThumbnail: lodashGet(directusRecord, 'fields.Job Description Document (Upload).0.thumbnails.large.url'),
+    jobDescription: directusRecord['Job_Description'],    
     employer: directusRecord['Employer'],
     sector: directusRecord['Sector'],
     workType: directusRecord['Work_Type'],
@@ -30,6 +28,17 @@ const transformDirectusRecord = (directusRecord: any): IJob => {
     applicationIn: directusRecord['Application_Instructions'],
     applicationLink: directusRecord['Application_Link']
   }
+
+  const descriptionFiles: any[] = directusRecord['Job_Description_Document_Upload'];
+  if (descriptionFiles) {
+    job.jobDescriptionUpload = descriptionFiles.map((file: any) => {
+      return {
+        fileId: file['directus_files_id']['id'],
+        fileName: file['directus_files_id']['title'],
+      }
+    })
+  }
+
   return job;
 }
 
@@ -45,6 +54,7 @@ export type JobContextValue = {
   isFetchingJobs: boolean;
   isFetchingCurrentJob: boolean;
   currentJob: IJob | undefined;
+  currentJobFiles: string[];
   currentPage: number;
   currentFilterOptions: IFilterOptions | undefined;
   currentJobsFilterCount: number;  
@@ -62,6 +72,7 @@ const JobProvider = ({ children }: any) => {
   const [isFetchingJobs, setIsFetchingJobs] = useState(false);
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
+  const [currentJobFiles, setCurrentJobFiles] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentJobsFilterCount, setCurrentJobsFilterCount] = useState<number>(0);
   const [currentFilterOptions, setCurrentFilterOptions] = useState<IFilterOptions>({});
@@ -86,8 +97,9 @@ const JobProvider = ({ children }: any) => {
 
       // Build filter query
       const directusQuery: any = {
-        sort: ['Job_Title'],
+        sort: ['Job_Title'],        
         filter: {},
+        fields: '*,Job_Description_Document_Upload.directus_files_id.*',
         meta: '*',
         page: pageNumber,
       };
@@ -131,8 +143,12 @@ const JobProvider = ({ children }: any) => {
   const fetchCurrentJob = async (id: string) => {
     setIsFetchingCurrentJob(true)
 
-    const response = await directusEnv.getOne('Jobs', id);
+    const response = await directusEnv.getOne('Jobs', id, {
+      fields: '*,Job_Description_Document_Upload.directus_files_id.*',
+    });
     const transformedJob = transformDirectusRecord(response);
+    
+
     setCurrentJob(transformedJob)
     setIsFetchingCurrentJob(false);
   }
@@ -147,6 +163,7 @@ const JobProvider = ({ children }: any) => {
           isFetchingCurrentJob,
           fetchCurrentJob,
           currentJob,
+          currentJobFiles,
           currentJobsFilterCount, 
           currentPage,
           movePage,
