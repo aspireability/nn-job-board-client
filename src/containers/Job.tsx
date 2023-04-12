@@ -31,7 +31,7 @@ const Job = () => {
       }
     
     return (
-        <Box px={{ base: 4, md: 10 }} py={{ base: 2, md: 7 }} mb={7}>
+        <Box px={{ base: 4, md: 10 }} py={{ base: 4, md: 7 }} mb={7}>
           <Box mb={{ base: 3, md: 7 }}>
             <ChakraLink as={Link} to="/jobs" color='teal.600'>Back to Jobs</ChakraLink>
           </Box>          
