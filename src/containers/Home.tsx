@@ -20,7 +20,7 @@ const Home = () => {
         >
           <Box
             width={{ base: "100%", md: "75%", lg: "50%" }}
-            backgroundColor="rgba(255, 255, 255, .2)"
+            backgroundColor="rgba(255, 255, 255, .5)"
             borderRadius={4}
             p={{ base: 2, md: 4 }}
           >
@@ -69,8 +69,8 @@ const Home = () => {
           px={{ base: 4, md: 12 }}
           py={{ base: 7, md: 12 }}
         >
-          <Text fontSize={{ base: 'lg', md: 'xl' }} mb={2} color="gray.600" fontWeight="bold">DISCLAIMER ON ACCURACY AND COMPLETENESS OF INFORMATION</Text>
-          <Text fontSize={{ base: 'md', md: 'lg' }}>While the we use reasonable efforts to provide accurate and up-to-date information, some of the information provided is gathered or provided by third parties and has not been independently verified by us. In addition, the information contained on this site has been compiled from a variety of sources and is subject to change without notice. Data can also quickly become out of-date. By using this site, you agree that we will not be held liable for any errors or omissions contained in the information provided. Although the information found on this site has been produced and processed from sources believed to be reliable, no warranty, express or implied, is made regarding accuracy, adequacy, completeness, legality, reliability or usefulness of any information. We provide this information on an “as is” basis and expressly disclaim any and all warranties, express and implied, with respect thereto. This disclaimer applies to both isolated and aggregate uses of information.</Text>
+          <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="gray.600" fontWeight="bold">DISCLAIMER ON ACCURACY AND COMPLETENESS OF INFORMATION</Text>
+          <Text fontSize={{ base: 'sm', md: 'md' }}>While the we use reasonable efforts to provide accurate and up-to-date information, some of the information provided is gathered or provided by third parties and has not been independently verified by us. In addition, the information contained on this site has been compiled from a variety of sources and is subject to change without notice. Data can also quickly become out of-date. By using this site, you agree that we will not be held liable for any errors or omissions contained in the information provided. Although the information found on this site has been produced and processed from sources believed to be reliable, no warranty, express or implied, is made regarding accuracy, adequacy, completeness, legality, reliability or usefulness of any information. We provide this information on an “as is” basis and expressly disclaim any and all warranties, express and implied, with respect thereto. This disclaimer applies to both isolated and aggregate uses of information.</Text>
         </Box>
       )
     }
