@@ -14,7 +14,7 @@ const Home = () => {
           backgroundPosition="center"
           backgroundSize="cover"
           backgroundRepeat="no-repeat"
-          height={{ base: "25%", md: "60%" }}
+          height={{ base: "25%", md: "55%" }}
           px={{ base: 4, md: 12 }}
           py={{ base: 7, md: 12 }}          
         >

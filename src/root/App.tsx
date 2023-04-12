@@ -43,10 +43,10 @@ const App = () => {
           <Route path="/job/:jobId" element={<Job />} />
         </Routes>
       </Box>
-      <Center py={3} px={12} backgroundColor="blue.900" color="white">
+      <Center py={3} px={12} backgroundColor="gray.100">
         {/* <Text fontSize={{ base: "xs", md: "md" }} fontWeight="semibold">Navajo Nation Job Board</Text>
         <Spacer /> */}
-        <Text fontSize={{ base: "xs", md: "md" }} fontWeight="semibold" >Powered by <Link href="https://aspireability.io" target={"_blank"}>Aspire Ability Inc.</Link></Text>
+        <Link href="https://aspireability.io" target={"_blank"} fontSize={{ base: "xs", md: "md" }} fontWeight="semibold"> © Aspire Ability Inc. 2023</Link>
       </Center>
     </Box>
   )
