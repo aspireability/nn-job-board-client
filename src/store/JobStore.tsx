@@ -1,36 +1,34 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { airtableApi } from '../api/airtableApi';
-import { get as lodashGet } from 'lodash';
+import React, { createContext, useContext, useState } from 'react';
+import { directusEnv } from '../api/directusApi';
 import { IJob } from '../types/types';
-import { capitalize } from 'lodash';
 
-const transformAirtableRecord = (airtableRecord: any): IJob => {
+const transformDirectusRecord = (directusRecord: any): IJob => {
   const job: IJob = {
-    id: airtableRecord['id'],
-    jobTitle: airtableRecord['fields']['Job Title'],
-    jobDescription: airtableRecord['fields']['Job Description'],
-    jobDescriptionUpload: lodashGet(airtableRecord, 'fields.Job Description Document (Upload).0.url'),
-    jobDescriptionUploadThumbnail: lodashGet(airtableRecord, 'fields.Job Description Document (Upload).0.thumbnails.large.url'),
-    employer: airtableRecord['fields']['Employer'],
-    sector: airtableRecord['fields']['Sector'],
-    workType: airtableRecord['fields']['Work Type'],
-    locationType: airtableRecord['fields']['Location Type'],
-    location: airtableRecord['fields']['Location'],
-    payRange: airtableRecord['fields']['Pay Range'],
-    hourlyWages: airtableRecord['fields']['Hourly Wage'],
-    payCode: airtableRecord['fields']['Pay Code'],
-    benefits: airtableRecord['fields']['Benefits'],
-    startingDate: airtableRecord['fields']['Start Date'],
-    closingDate: airtableRecord['fields']['Closing Date'],
-    address: airtableRecord['fields']['Address'],
-    navajoPreference: airtableRecord['fields']['Navajo Preference?'],
-    veteranPreference: airtableRecord['fields']['Veteran Preference'],
-    requiredDocuments: airtableRecord['fields']['Required Documents'],
-    classification: airtableRecord['fields']['Classification'],
-    preferredEdExp: airtableRecord['fields']['Preferred Educational/Experience '],
-    additionalReq: airtableRecord['fields']['Additional Requirements'],
-    applicationIn: airtableRecord['fields']['Application Instructions'],
-    applicationLink: airtableRecord['fields']['Application Link']
+    id: directusRecord['id'],
+    jobTitle: directusRecord['Job_Title'],
+    jobDescription: directusRecord['Job_Description'],
+    // jobDescriptionUpload: lodashGet(directusRecord, 'fields.Job Description Document (Upload).0.url'),
+    // jobDescriptionUploadThumbnail: lodashGet(directusRecord, 'fields.Job Description Document (Upload).0.thumbnails.large.url'),
+    employer: directusRecord['Employer'],
+    sector: directusRecord['Sector'],
+    workType: directusRecord['Work_Type'],
+    locationType: directusRecord['Location_Type'],
+    location: directusRecord['Location'],
+    payRange: directusRecord['Pay_Range'],
+    hourlyWages: directusRecord['Hourly_Wage'],
+    payCode: directusRecord['Pay_Code'],
+    benefits: directusRecord['Benefits'],
+    startingDate: directusRecord['Start_Date'],
+    closingDate: directusRecord['Closing_Date'],
+    address: directusRecord['Address'],
+    navajoPreference: directusRecord['Navajo_Preference?'],
+    veteranPreference: directusRecord['Veteran_Preference'],
+    requiredDocuments: directusRecord['Required_Documents'],
+    classification: directusRecord['Classification'],
+    preferredEdExp: directusRecord['Preferred_Educational_Experience'],
+    additionalReq: directusRecord['Additional_Requirements'],
+    applicationIn: directusRecord['Application_Instructions'],
+    applicationLink: directusRecord['Application_Link']
   }
   return job;
 }
@@ -43,16 +41,15 @@ export interface IFilterOptions {
 
 export type JobContextValue = {
   jobs: IJob[] | undefined;
-  allJobs: IJob[] | undefined;
   isFetchingJobs: boolean;
-  isFetchingAllJobs: boolean;
-  fetchJobs: (filterOptions: IFilterOptions) => void;
   isFetchingCurrentJob: boolean;
-  fetchCurrentJob: (id: string) => void;
   currentJob: IJob | undefined;
   currentPage: number;
-  movePage: (pageNumber: number) => void;
   currentFilterOptions: IFilterOptions | undefined;
+  currentJobsFilterCount: number;  
+  fetchJobs: (filterOptions: IFilterOptions) => void;  
+  fetchCurrentJob: (id: string) => void;
+  movePage: (pageNumber: number) => void;  
 }
 
 const JobContext = createContext<JobContextValue | undefined>(undefined);
@@ -61,107 +58,74 @@ export const useJob = () => useContext(JobContext);
 
 const JobProvider = ({ children }: any) => {
   const [jobs, setJobs] = useState<IJob[] | undefined>(undefined);
-  const [allJobs, setAllJobs] = useState<IJob[] | undefined>(undefined);
   const [isFetchingJobs, setIsFetchingJobs] = useState(false);
-  const [isFetchingAllJobs, setIsFetchingAllJobs] = useState(false);
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentFilterOptions, setCurrentFilterOptions] = useState<IFilterOptions | undefined>();
+  const [currentJobsFilterCount, setCurrentJobsFilterCount] = useState<number>(0);
+  const [currentFilterOptions, setCurrentFilterOptions] = useState<IFilterOptions>({});
 
 
-  const fetchJobs = async (filterOptions: IFilterOptions) => {
+  const fetchJobs = async (filterOptions: IFilterOptions, pageNumber?: number) => {
       // if jobs is not undefined (means we have a previous load)
-      // and incoming filter options has not changed from current filter options
+      // AND incoming filter options has not changed from current filter options
       // then return
-      if (jobs !== undefined && currentFilterOptions !== undefined) {
+      if (jobs !== undefined) {
         if (filterOptions.searchTerm === currentFilterOptions.searchTerm 
             && filterOptions.sector === currentFilterOptions.sector 
-            && filterOptions.workType === currentFilterOptions.workType) {
+            && filterOptions.workType === currentFilterOptions.workType
+            && pageNumber === currentPage) {
                 return
         }
       }
 
-      // Initialize and set fetching trackers
-      let fetchedFirstPage = false;
-      let allJobsCollector: IJob[] = [];
-
       setIsFetchingJobs(true);
-      setIsFetchingAllJobs(true);
       setCurrentFilterOptions(filterOptions)
+      setCurrentPage(pageNumber || 1)
 
       // Build filter query
-      const filterConstraints = [];
+      const directusQuery: any = {
+        sort: ['Job_Title'],
+        filter: {},
+        meta: '*',
+        page: pageNumber,
+      };
+
       if (filterOptions.searchTerm) {
-        const lowerCaseSearchTerm = filterOptions.searchTerm.toLowerCase();
-        const columnsToSearch = ['Job Title', 'Location'];
-        const searchQueries = columnsToSearch.map((column: string) => `SEARCH('${lowerCaseSearchTerm}', LOWER({${column}}))`);
-        const combinedSearch = `OR(${searchQueries.join(',')})`;
-        console.log('combinedSearch', combinedSearch);
-        filterConstraints.push(combinedSearch);
+        directusQuery['filter']['Job_Title']={ '_contains': filterOptions.searchTerm };
+        // directusQuery['filter']['Location']={ '_contains': filterOptions.searchTerm };        
       }
       if (filterOptions.workType) {
-        filterConstraints.push(`{Work Type}='${filterOptions.workType}'`)
+        directusQuery['filter']['Work_Type']=filterOptions.workType;
       }
       if (filterOptions.sector) {
-        filterConstraints.push(`{Sector}='${filterOptions.sector}'`)
-      }
-
-      let filterByFormula = ''
-      if (filterConstraints.length === 1) {
-        filterByFormula = filterConstraints[0]
-      }
-      else if (filterConstraints.length > 1) {
-        filterByFormula = `AND(${filterConstraints.join(',')})`;
+        directusQuery['filter']['Sector']=filterOptions.sector;
       }
 
       // Query API
-      airtableApi('Job Listing Data').select({
-        view: 'NN Job Board Website View',
-        filterByFormula
-      }).eachPage(function page(records, fetchNextPage) {
-          const transformedJobs = records.map((record: any) => {
-            return transformAirtableRecord(record) as IJob;
-          });
-
-          allJobsCollector = allJobsCollector.concat(transformedJobs)
-          if (!fetchedFirstPage) {
-            setJobs(transformedJobs);
-            setIsFetchingJobs(false);
-            fetchedFirstPage = true;
-          }
-
-          fetchNextPage();
-
-      }, function done(err) {
-        console.log('retrieved all jobs', allJobsCollector.length)
-        setAllJobs(allJobsCollector)
-        setIsFetchingAllJobs(false);
-        setCurrentPage(1)
+      const response = await directusEnv.getMany('Jobs', directusQuery)
+      const fetchedJobs = response.data;
+      const transformedJobs = fetchedJobs.map((record: any) => {
+        return transformDirectusRecord(record) as IJob;
       });
+      
+      setJobs(transformedJobs);
+      setIsFetchingJobs(false);
+      setCurrentJobsFilterCount(response.meta.filter_count)      
   }
 
   const movePage = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-    setJobs(allJobs)
-    const page_size = 100;
-    const end = pageNumber * page_size;
-    const start = end - page_size;
-    console.log('pageNumber', pageNumber);
-    setJobs(allJobs?.slice(start, end));
+    fetchJobs(currentFilterOptions, pageNumber)
   }
   
 
   const fetchCurrentJob = async (id: string) => {
-      setIsFetchingCurrentJob(true)
-      airtableApi('Job Listing Data').find(id, function(err, record) {
-          if (err) { console.error(err); return; }
-          console.log('current record', record);
-          const transformedJob = transformAirtableRecord(record);
-          console.log('transformedJob', transformedJob);
-          setCurrentJob(transformedJob)
-          setIsFetchingCurrentJob(false)
-      });       
+    setIsFetchingCurrentJob(true)
+
+    const response = await directusEnv.getOne('Jobs', id);
+    const transformedJob = transformDirectusRecord(response);
+    setCurrentJob(transformedJob)
+    setIsFetchingCurrentJob(false);
   }
 
 
@@ -170,12 +134,11 @@ const JobProvider = ({ children }: any) => {
       value={{
           jobs,
           isFetchingJobs,
-          allJobs,
-          isFetchingAllJobs,  
           fetchJobs,
           isFetchingCurrentJob,
           fetchCurrentJob,
           currentJob,
+          currentJobsFilterCount, 
           currentPage,
           movePage,
           currentFilterOptions

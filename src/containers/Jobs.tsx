@@ -11,7 +11,7 @@ const Home = () => {
         jobs, 
         isFetchingJobs,
         fetchJobs,
-        allJobs,
+        currentJobsFilterCount,
         currentPage,
         movePage,
         currentFilterOptions
@@ -44,7 +44,7 @@ const Home = () => {
       
 
       const renderPages = () => {
-        if (allJobs === undefined || jobs === undefined) {
+        if (jobs === undefined) {
           return (
             <Box>
               <Text fontSize="sm">Loading pages ...</Text>
@@ -52,20 +52,24 @@ const Home = () => {
           );
         }
 
-        var currentPageEquals1 = currentPage === 1;
-        var currentPageEqualsLastPage = currentPage === Math.ceil(allJobs.length / 100);
-
-        var endCount = currentPageEquals1 ? jobs.length : ((currentPage-1) * 100) + jobs.length;
-        var startCount = currentPageEquals1 ? 1 : ((currentPage-1) * 100) + 1;
+        var isFirstPage = currentPage === 1;
+        var isLastPage = currentPage === Math.ceil(currentJobsFilterCount / 100);
+        
+        var startCount = isFirstPage ? 1 : ((currentPage-1) * 100) + 1;
+        var endCount = isLastPage ? currentJobsFilterCount : ((currentPage-1) * 100) + jobs.length;
 
         return (
             
         <Box>
             <HStack>
-                <Text fontSize="sm">Jobs {startCount}-{endCount} of {allJobs.length}</Text>
+            {currentJobsFilterCount === 0 ? (
+                  <Text fontSize="sm">No jobs found matching your search.</Text>  
+                ) : (
+                  <Text fontSize="sm">Jobs {startCount}-{endCount} of {currentJobsFilterCount}</Text>
+                )}
                 <Spacer />
-                <Button size={{ base: 'xs', md: 'sm' }} onClick={() => movePage(currentPage - 1)} isDisabled={currentPageEquals1}>Previous</Button>
-                <Button size={{ base: 'xs', md: 'sm' }} onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled={currentPageEqualsLastPage}>Next</Button>
+                <Button size={{ base: 'xs', md: 'sm' }} onClick={() => movePage(currentPage - 1)} isDisabled={isFirstPage}>Previous</Button>
+                <Button size={{ base: 'xs', md: 'sm' }} onClick={() => movePage(currentPage + 1)} width={'90px'} isDisabled={isLastPage}>Next</Button>
             </HStack>
         </Box>
         )
