@@ -54,7 +54,6 @@ export type JobContextValue = {
   isFetchingJobs: boolean;
   isFetchingCurrentJob: boolean;
   currentJob: IJob | undefined;
-  currentJobFiles: string[];
   currentPage: number;
   currentFilterOptions: IFilterOptions | undefined;
   currentJobsFilterCount: number;  
@@ -72,7 +71,6 @@ const JobProvider = ({ children }: any) => {
   const [isFetchingJobs, setIsFetchingJobs] = useState(false);
   const [isFetchingCurrentJob, setIsFetchingCurrentJob] = useState(false);
   const [currentJob, setCurrentJob] = useState<IJob | undefined>(undefined);
-  const [currentJobFiles, setCurrentJobFiles] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentJobsFilterCount, setCurrentJobsFilterCount] = useState<number>(0);
   const [currentFilterOptions, setCurrentFilterOptions] = useState<IFilterOptions>({});
@@ -107,7 +105,10 @@ const JobProvider = ({ children }: any) => {
       const filterCollector: any[] = [];
 
       if (filterOptions.jobTitle) {
-        filterCollector.push({ 'Job_Title': { '_icontains': filterOptions.jobTitle }})        
+        filterCollector.push({ '_or': [
+          { 'Job_Title': { '_icontains': filterOptions.jobTitle }},
+          { 'Employer': { '_icontains': filterOptions.jobTitle }},
+        ]})
       }
       if (filterOptions.location) {
         filterCollector.push({ 'Location': { '_icontains': filterOptions.location }})
@@ -163,7 +164,6 @@ const JobProvider = ({ children }: any) => {
           isFetchingCurrentJob,
           fetchCurrentJob,
           currentJob,
-          currentJobFiles,
           currentJobsFilterCount, 
           currentPage,
           movePage,

@@ -117,7 +117,7 @@ const Home = () => {
             <SimpleGrid columns={{ base: 2, md: 6 }} gap={2} alignItems="end">
               <InputGroup>
                 <InputLeftElement mt="-1" pointerEvents='none' children={<SearchIcon color='gray.900' />} />
-                <Input size="sm" placeholder='Search Job Title' onChange={handleJobTitle} value={jobTitle} />                    
+                <Input size="sm" placeholder={'Title or Employer'} onChange={handleJobTitle} value={jobTitle} />                    
               </InputGroup>
               <InputGroup>
                 <InputLeftElement mt="-1" pointerEvents='none' children={<Icon as={MdOutlineLocationOn} color='gray.900' />} />
@@ -151,14 +151,6 @@ const Home = () => {
               {renderJobs()}
             </Box>
           </Box>
-          {/* <Box
-            px={{ base: 4, md: 10 }}
-            py={{ base: 2, md: 4 }}
-            borderTop="1px"
-            borderColor="gray.300"
-          >
-            {renderPages()}
-          </Box>        */}
         </>
       )
 }

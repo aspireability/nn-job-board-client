@@ -35,7 +35,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "deploy": "react-scripts build && gh-pages -d build",
+    "deploy": "yarn ask && react-scripts build && gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -43,7 +43,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "migrate-collection": "ts-node-dev ./src/scripts/migrate-collection.ts",
-    "import-images": "ts-node-dev ./src/scripts/import-images.ts"
+    "airtable-migrate-files": "ts-node-dev ./src/scripts/airtable-migrate-files.ts",
+    "ask": "node -e \"const readlineSync = require('readline-sync'); console.log('Check your .env file before continuing with deploy (press enter when ready)'); const input = readlineSync.question(); console.log(input);\""
   },
   "eslintConfig": {
     "extends": [
@@ -89,6 +90,7 @@
     "csv-parser": "^3.0.0",
     "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
+    "readline-sync": "^1.4.10",
     "ts-node-dev": "^2.0.0",
     "webpack": "^5.75.0"
   }
