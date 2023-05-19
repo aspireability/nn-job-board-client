@@ -44,7 +44,8 @@
     "build-storybook": "build-storybook -s public",
     "migrate-collection": "ts-node-dev ./src/scripts/migrate-collection.ts",
     "airtable-migrate-files": "ts-node-dev ./src/scripts/airtable-migrate-files.ts",
-    "ask": "node -e \"const readlineSync = require('readline-sync'); console.log('Check your .env file before continuing with deploy (press enter when ready)'); const input = readlineSync.question(); console.log(input);\""
+    "ask": "node -e \"const readlineSync = require('readline-sync'); console.log('Check your .env file before continuing with deploy (press enter when ready)'); const input = readlineSync.question(); console.log(input);\"",
+    "import-images": "ts-node-dev ./src/scripts/import-images.ts"
   },
   "eslintConfig": {
     "extends": [
