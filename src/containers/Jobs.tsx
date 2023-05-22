@@ -6,7 +6,7 @@ import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
 import { SearchIcon } from '@chakra-ui/icons'
 import { Icon } from '@chakra-ui/react';
 import { MdOutlineLocationOn } from 'react-icons/md';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -38,14 +38,16 @@ const Home = () => {
         if (sector !== '') filterOptions.sector = sector;
         // TODO work type, sector
         
-        const payload = {
-          category: 'Jobs',
-          action: 'Search',
-          label: JSON.stringify(filterOptions)
-        };
-
-        console.log('on search track', payload);
-        ReactGA.event(payload);
+        if (Object.keys(filterOptions).length !== 0) {
+          const payload = {
+            category: 'Jobs',
+            action: 'Search',
+            label: JSON.stringify(filterOptions)
+          };
+  
+          console.log('on search track', payload);
+          ReactGA.event(payload);
+        }        
 
         fetchJobs(filterOptions)
       }, [jobTitle, location, workType, sector]);

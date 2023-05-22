@@ -4,7 +4,7 @@ import { DownloadIcon } from '@chakra-ui/icons'
 import { IJob, IJobFile } from '../types/types'
 import { colorSchemes, locationTypeOptions, sectorOptions, workTypeOptions } from '../util/jobPropertyOptions';
 import { renderTag } from '../util/tags';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 interface JobPageProps {
     job: IJob;

@@ -12,7 +12,7 @@ import Job from '../containers/Job';
 import { FiMenu } from 'react-icons/fi'
 import { Box, Center, Flex, Heading, Spacer, Link, IconButton, HStack, Image, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import { Link as NavLink } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import { useEffect } from 'react'
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     console.log('ga page track', location.pathname);
     ReactGA.set({ page: location.pathname });
-    ReactGA.pageview(location.pathname);
+    ReactGA.send({ hitType: 'pageview', page: location.pathname });
   }, [location]);
 
   const renderHeader = () => {

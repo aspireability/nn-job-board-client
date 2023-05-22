@@ -7,7 +7,7 @@ import App from "./App"
 import { ChakraProvider } from '@chakra-ui/react'
 import JobProvider from '../store/JobStore';
 import theme from '..//styles/theme';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 ReactGA.initialize('G-RDS3E6V0PM');
 
