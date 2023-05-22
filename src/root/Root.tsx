@@ -9,7 +9,8 @@ import JobProvider from '../store/JobStore';
 import theme from '..//styles/theme';
 import ReactGA from 'react-ga4';
 
-ReactGA.initialize('G-RDS3E6V0PM');
+const gaId = process.env.REACT_APP_GA_ID as string;
+ReactGA.initialize(gaId);
 
 const Root = () => {  
   return (
