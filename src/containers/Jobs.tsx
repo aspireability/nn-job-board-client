@@ -6,6 +6,8 @@ import { IFilterOptions, JobContextValue, useJob } from '../store/JobStore';
 import { SearchIcon } from '@chakra-ui/icons'
 import { Icon } from '@chakra-ui/react';
 import { MdOutlineLocationOn } from 'react-icons/md';
+import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -37,6 +39,17 @@ const Home = () => {
         if (sector !== '') filterOptions.sector = sector;
         // TODO work type, sector
         
+        if (Object.keys(filterOptions).length !== 0) {
+          const payload = {
+            category: 'Jobs',
+            action: 'Search',
+            label: JSON.stringify(filterOptions)
+          };
+  
+          console.log('on search track', payload);
+          ReactGA.event(payload);
+        }        
+
         fetchJobs(filterOptions)
       }, [jobTitle, location, workType, sector]);
 
@@ -106,6 +119,9 @@ const Home = () => {
     
       return (
         <>
+          <Helmet>
+            <title>Navajo Nation Job Board - Jobs</title>
+          </Helmet>
           <Box
             borderBottom="1px"
             borderColor="gray.300"

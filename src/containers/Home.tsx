@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Icon } from '@chakra-ui/react';
 import { MdOutlinePersonSearch, MdOutlineMap } from 'react-icons/md';
 import { HiOutlineFilter, HiOutlineDatabase }  from 'react-icons/hi';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     const path = '/jobs'
@@ -79,6 +80,9 @@ const Home = () => {
     return (
       <Box        
       >
+        <Helmet>
+          <title>Navajo Nation Job Board - Home</title>
+        </Helmet>
         {renderHero()}
           <Box
             px={{ base: 4, md: "30%" }}

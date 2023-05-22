@@ -4,7 +4,7 @@ import '@fontsource/inter/700.css'
 import '@fontsource/manrope/400.css'
 import '@fontsource/manrope/700.css'
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Home from '../containers/Home';
 import Jobs from '../containers/Jobs';
@@ -12,9 +12,17 @@ import Job from '../containers/Job';
 import { FiMenu } from 'react-icons/fi'
 import { Box, Center, Flex, Heading, Spacer, Link, IconButton, HStack, Image, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import { Link as NavLink } from 'react-router-dom';
+import ReactGA from 'react-ga4';
+import { useEffect } from 'react'
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log('ga page track', location.pathname);
+    ReactGA.send({ hitType: 'pageview', page: location.pathname });
+  }, [location]);
 
   const renderHeader = () => {
     return (
