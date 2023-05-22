@@ -4,6 +4,7 @@ import { DownloadIcon } from '@chakra-ui/icons'
 import { IJob, IJobFile } from '../types/types'
 import { colorSchemes, locationTypeOptions, sectorOptions, workTypeOptions } from '../util/jobPropertyOptions';
 import { renderTag } from '../util/tags';
+import ReactGA from 'react-ga';
 
 interface JobPageProps {
     job: IJob;
@@ -19,6 +20,16 @@ const JobPage = ({
     return (
       <Text color="gray.600" fontSize={{ base: 'xs', md: 'sm' }} fontWeight="semibold">{label}</Text>
     )
+  }
+
+  const onApplyTrack = () => {
+    const payload = {
+      category: 'Job',
+      action: 'Apply',
+      label: job.applicationLink
+    };
+    console.log('on apply track', payload);
+    ReactGA.event(payload);
   }
 
   const renderProperty = (label: string, value?: string, asTag: boolean = false, options: string[] = []) => {
@@ -86,7 +97,7 @@ const JobPage = ({
         {renderProperty('Additional Requirements', job.additionalReq)}
         {renderProperty('Application Instructions', job.applicationIn)}
         <Box mt={3}>
-          <Button as={Link} href={job.applicationLink} isExternal colorScheme='blue' variant={'solid'} width={{ base: '100%', md: 'md' }}>Apply Now</Button>
+          <Button as={Link} href={job.applicationLink} onClick={onApplyTrack} isExternal colorScheme='blue' variant={'solid'} width={{ base: '100%', md: 'md' }}>Apply Now</Button>
         </Box>
       </SimpleGrid>
     </Box>

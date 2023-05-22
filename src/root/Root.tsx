@@ -7,9 +7,12 @@ import App from "./App"
 import { ChakraProvider } from '@chakra-ui/react'
 import JobProvider from '../store/JobStore';
 import theme from '..//styles/theme';
+import ReactGA from 'react-ga';
 
+ReactGA.initialize('G-RDS3E6V0PM');
 
-const Root = () => (
+const Root = () => {  
+  return (
     <ChakraProvider theme={theme}>
         <JobProvider>
             <Router>
@@ -18,5 +21,6 @@ const Root = () => (
         </JobProvider>
     </ChakraProvider>
   )
-  
+}
+
 export default Root;
