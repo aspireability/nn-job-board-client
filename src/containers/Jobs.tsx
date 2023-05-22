@@ -7,6 +7,7 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { Icon } from '@chakra-ui/react';
 import { MdOutlineLocationOn } from 'react-icons/md';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -118,6 +119,9 @@ const Home = () => {
     
       return (
         <>
+          <Helmet>
+            <title>Navajo Nation Job Board - Jobs</title>
+          </Helmet>
           <Box
             borderBottom="1px"
             borderColor="gray.300"

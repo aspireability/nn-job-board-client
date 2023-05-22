@@ -15,7 +15,6 @@ const baseUrl = process.env.REACT_APP_DIRECTUS_URL as string;
 const JobPage = ({
     job
 }: JobPageProps) => {
-
   const renderLabel = (label: string) => {
     return (
       <Text color="gray.600" fontSize={{ base: 'xs', md: 'sm' }} fontWeight="semibold">{label}</Text>
@@ -26,7 +25,7 @@ const JobPage = ({
     const payload = {
       category: 'Job',
       action: 'Apply',
-      label: job.applicationLink
+      label: `${(job.jobTitle as string)} - ${job.id}`
     };
     console.log('on apply track', payload);
     ReactGA.event(payload);

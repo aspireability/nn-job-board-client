@@ -21,7 +21,6 @@ const App = () => {
 
   useEffect(() => {
     console.log('ga page track', location.pathname);
-    ReactGA.set({ page: location.pathname });
     ReactGA.send({ hitType: 'pageview', page: location.pathname });
   }, [location]);
 
