@@ -4,28 +4,61 @@ import '@fontsource/inter/700.css'
 import '@fontsource/manrope/400.css'
 import '@fontsource/manrope/700.css'
 
-import React from 'react';
-import logo from './logo.svg';
-
 import { Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Home from '../containers/Home';
 import Jobs from '../containers/Jobs';
 import Job from '../containers/Job';
-import { Box, Center, Flex, Heading, HStack, Link, Spacer, Stack, Text, VStack } from '@chakra-ui/react'
+import { FiMenu } from 'react-icons/fi'
+import { Box, Center, Flex, Heading, Spacer, Link, IconButton, HStack, Image, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import { Link as NavLink } from 'react-router-dom';
 
 const App = () => {
+  const navigate = useNavigate();
+
+  const renderHeader = () => {
+    return (
+      <Flex
+        px={{ base: 4, md: 10 }}
+        py={{ base: 2, md: 4 }}
+        borderBottom="1px solid"
+        borderColor="blue.900"
+        // boxShadow="md"
+      >
+        <HStack gap={[0, 3]}>
+          <Image
+            boxSize={{ base: '40px', md: '60px' }}
+            src='./navajoSeal_SiteLogo_only.png'
+            alt='Navajo Nation Seal'
+            onClick={() => navigate('/')}
+            cursor="pointer"
+          />
+          <Heading fontSize={{ base: 'lg', md: '3xl' }}>Navajo Nation Job Board</Heading>
+        </HStack>
+        <Spacer />
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label='Options'
+            icon={<FiMenu />}
+            variant="outline"
+            size={['sm', 'md']}
+          />
+          <MenuList>
+            <MenuItem as={NavLink} to="/">
+              Home
+            </MenuItem>
+            <MenuItem as={NavLink} to="/jobs">
+              Explore Jobs
+            </MenuItem>            
+          </MenuList>
+        </Menu>
+      </Flex>
+    )
+  }
   return (
     <Box display="flex" flexDirection="column" height="100vh" width="100%">
-      <Box backgroundColor="blue.900" py={2}>
-        <Box backgroundColor="yellow.400" py={2} w="100%">
-          <Center color="white" backgroundColor="red.800" py={2} w="100%">
-            <VStack>
-              <Heading fontSize={{ base: 'lg', md: '4xl' }}>Kǫ́ǫ́ Naanish Hólǫ́ - There ARE Jobs HERE</Heading>
-              <Heading fontSize={{ base: 'md', md: '2xl' }}>Official Job Board of the Navajo Nation</Heading>
-            </VStack>
-          </Center>
-        </Box>
-      </Box>
+      {renderHeader()}
       <Box flexGrow="1" display="flex" flexDirection="column" overflow="auto">
         <Routes>
           <Route path='/' element={<Home />} />
@@ -33,10 +66,10 @@ const App = () => {
           <Route path="/job/:jobId" element={<Job />} />
         </Routes>
       </Box>
-      <Center py={3} px={12} backgroundColor="blue.900" color="white">
+      <Center py={3} px={12} backgroundColor="gray.100">
         {/* <Text fontSize={{ base: "xs", md: "md" }} fontWeight="semibold">Navajo Nation Job Board</Text>
         <Spacer /> */}
-        <Text fontSize={{ base: "xs", md: "md" }} fontWeight="semibold" >Powered by <Link href="https://aspireability.io" target={"_blank"}>Aspire Ability Inc.</Link></Text>
+        <Link href="https://aspireability.io" target={"_blank"} fontSize={{ base: "xs", md: "md" }} fontWeight="semibold"> © Aspire Ability Inc. 2023</Link>
       </Center>
     </Box>
   )

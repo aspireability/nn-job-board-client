@@ -28,8 +28,8 @@ const JobCard = ({
               <Heading fontSize="2xl">{job.jobTitle}</Heading>
           </Box>
           {renderProperty('Employer', job.employer)}
-          {renderProperty('Work Type', job.workType, true, workTypeOptions)}
           {renderProperty('Sector', job.sector, true, sectorOptions)}
+          {renderProperty('Work Type', job.workType, true, workTypeOptions)}          
           {renderProperty('Location Type', job.locationType, true, locationTypeOptions)}
           {renderProperty('Location', job.location)}
         </Box>

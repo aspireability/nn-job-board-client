@@ -6,9 +6,7 @@ const transformDirectusRecord = (directusRecord: any): IJob => {
   const job: IJob = {
     id: directusRecord['id'],
     jobTitle: directusRecord['Job_Title'],
-    jobDescription: directusRecord['Job_Description'],
-    // jobDescriptionUpload: lodashGet(directusRecord, 'fields.Job Description Document (Upload).0.url'),
-    // jobDescriptionUploadThumbnail: lodashGet(directusRecord, 'fields.Job Description Document (Upload).0.thumbnails.large.url'),
+    jobDescription: directusRecord['Job_Description'],    
     employer: directusRecord['Employer'],
     sector: directusRecord['Sector'],
     workType: directusRecord['Work_Type'],
@@ -30,11 +28,23 @@ const transformDirectusRecord = (directusRecord: any): IJob => {
     applicationIn: directusRecord['Application_Instructions'],
     applicationLink: directusRecord['Application_Link']
   }
+
+  const descriptionFiles: any[] = directusRecord['Job_Description_Document_Upload'];
+  if (descriptionFiles) {
+    job.jobDescriptionUpload = descriptionFiles.map((file: any) => {
+      return {
+        fileId: file['directus_files_id']['id'],
+        fileName: file['directus_files_id']['title'],
+      }
+    })
+  }
+
   return job;
 }
 
 export interface IFilterOptions {
-  searchTerm?: string,
+  jobTitle?: string,
+  location?: string,
   workType?: string,
   sector?: string,
 }
@@ -71,7 +81,7 @@ const JobProvider = ({ children }: any) => {
       // AND incoming filter options has not changed from current filter options
       // then return
       if (jobs !== undefined) {
-        if (filterOptions.searchTerm === currentFilterOptions.searchTerm 
+        if (filterOptions.jobTitle === currentFilterOptions.jobTitle 
             && filterOptions.sector === currentFilterOptions.sector 
             && filterOptions.workType === currentFilterOptions.workType
             && pageNumber === currentPage) {
@@ -85,21 +95,33 @@ const JobProvider = ({ children }: any) => {
 
       // Build filter query
       const directusQuery: any = {
-        sort: ['Job_Title'],
+        sort: ['Job_Title'],        
         filter: {},
+        fields: '*,Job_Description_Document_Upload.directus_files_id.*',
         meta: '*',
         page: pageNumber,
       };
 
-      if (filterOptions.searchTerm) {
-        directusQuery['filter']['Job_Title']={ '_contains': filterOptions.searchTerm };
-        // directusQuery['filter']['Location']={ '_contains': filterOptions.searchTerm };        
+      const filterCollector: any[] = [];
+
+      if (filterOptions.jobTitle) {
+        filterCollector.push({ '_or': [
+          { 'Job_Title': { '_icontains': filterOptions.jobTitle }},
+          { 'Employer': { '_icontains': filterOptions.jobTitle }},
+        ]})
+      }
+      if (filterOptions.location) {
+        filterCollector.push({ 'Location': { '_icontains': filterOptions.location }})
       }
       if (filterOptions.workType) {
-        directusQuery['filter']['Work_Type']=filterOptions.workType;
+        filterCollector.push({ 'Work_Type': { '_eq': filterOptions.workType }})
       }
       if (filterOptions.sector) {
-        directusQuery['filter']['Sector']=filterOptions.sector;
+        filterCollector.push({ 'Sector': { '_eq': filterOptions.sector }})
+      }
+
+      if (filterCollector.length > 0) {
+        directusQuery['filter']['_and']=filterCollector;
       }
 
       // Query API
@@ -122,8 +144,12 @@ const JobProvider = ({ children }: any) => {
   const fetchCurrentJob = async (id: string) => {
     setIsFetchingCurrentJob(true)
 
-    const response = await directusEnv.getOne('Jobs', id);
+    const response = await directusEnv.getOne('Jobs', id, {
+      fields: '*,Job_Description_Document_Upload.directus_files_id.*',
+    });
     const transformedJob = transformDirectusRecord(response);
+    
+
     setCurrentJob(transformedJob)
     setIsFetchingCurrentJob(false);
   }

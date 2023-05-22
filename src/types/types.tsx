@@ -1,11 +1,15 @@
 import { string } from "prop-types"
 
+export interface IJobFile {
+  fileId: string;
+  fileName: string;
+}
+
 export interface IJob {
     id: string,
     jobTitle?: string,
     jobDescription?: string,
-    jobDescriptionUpload?: string,
-    jobDescriptionUploadThumbnail?: string,
+    jobDescriptionUpload?: IJobFile[],
     employer?: string,
     sector?: string,
     workType?: string,
