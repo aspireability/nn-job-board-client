@@ -15,6 +15,8 @@ const baseUrl = process.env.REACT_APP_DIRECTUS_URL as string;
 const JobPage = ({
     job
 }: JobPageProps) => {
+    var applyLink = job.applicationLink !== '' && job.applicationLink !== undefined;
+    
   const renderLabel = (label: string) => {
     return (
       <Text color="gray.600" fontSize={{ base: 'xs', md: 'sm' }} fontWeight="semibold">{label}</Text>
@@ -95,9 +97,11 @@ const JobPage = ({
         {renderProperty('Required Documents', job.requiredDocuments)}
         {renderProperty('Additional Requirements', job.additionalReq)}
         {renderProperty('Application Instructions', job.applicationIn)}
+        {applyLink ? 
         <Box mt={3}>
           <Button as={Link} href={job.applicationLink} onClick={onApplyTrack} isExternal colorScheme='blue' variant={'solid'} width={{ base: '100%', md: 'md' }}>Apply Now</Button>
-        </Box>
+          </Box>
+          : null }
       </SimpleGrid>
     </Box>
   )
