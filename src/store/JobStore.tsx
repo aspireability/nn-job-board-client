@@ -25,6 +25,7 @@ const transformDirectusRecord = (directusRecord: any): IJob => {
     classification: directusRecord['Classification'],
     preferredEdExp: directusRecord['Preferred_Educational_Experience'],
     additionalReq: directusRecord['Additional_Requirements'],
+    postingID: directusRecord['Posting_ID'],
     applicationIn: directusRecord['Application_Instructions'],
     applicationLink: directusRecord['Application_Link']
   }

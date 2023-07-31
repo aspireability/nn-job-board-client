@@ -94,6 +94,7 @@ const JobPage = ({
         {renderProperty('Preferred Educational/Experience', job.preferredEdExp)}
         {renderProperty('Required Documents', job.requiredDocuments)}
         {renderProperty('Additional Requirements', job.additionalReq)}
+        {renderProperty('Posting_ID', job.postingID)}
         {renderProperty('Application Instructions', job.applicationIn)}
         <Box mt={3}>
           <Button as={Link} href={job.applicationLink} onClick={onApplyTrack} isExternal colorScheme='blue' variant={'solid'} width={{ base: '100%', md: 'md' }}>Apply Now</Button>

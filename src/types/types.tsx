@@ -28,6 +28,7 @@ export interface IJob {
     classification?: string,
     preferredEdExp?: string,
     additionalReq?: string,
+    postingID?: string,
     applicationIn?: string,
     applicationLink?: string,
 }
