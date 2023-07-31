@@ -15,7 +15,7 @@ const baseUrl = process.env.REACT_APP_DIRECTUS_URL as string;
 const JobPage = ({
     job
 }: JobPageProps) => {
-    var applyLink = job.applicationLink !== '' && job.applicationLink !== undefined;
+    var applyLink = job.applicationLink !== '' && job.applicationLink !== undefined && job.applicationLink !== null;
     
   const renderLabel = (label: string) => {
     return (
