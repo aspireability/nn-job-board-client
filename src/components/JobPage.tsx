@@ -5,6 +5,7 @@ import { IJob, IJobFile } from '../types/types'
 import { colorSchemes, locationTypeOptions, sectorOptions, workTypeOptions } from '../util/jobPropertyOptions';
 import { renderTag } from '../util/tags';
 import ReactGA from 'react-ga4';
+import sanitizeHtml from 'sanitize-html';
 
 interface JobPageProps {
     job: IJob;
@@ -36,10 +37,11 @@ const JobPage = ({
   const renderProperty = (label: string, value?: string, asTag: boolean = false, options: string[] = []) => {
     const indexofValue = options.indexOf(value || '');
     const colorScheme = indexofValue > -1 ? colorSchemes[indexofValue] : 'gray';
+    const display = value ? sanitizeHtml(value) : 'N/A';
     return (
       <Box mb={3}>
         {renderLabel(label)}
-        { asTag ? renderTag(value || 'N/A', 'md', colorScheme) : <Text fontSize={{ base: 'ld', md: 'xl' }}>{value || 'N/A'}</Text> }        
+        { asTag ? renderTag(value || 'N/A', 'md', colorScheme) : <Text fontSize={{ base: 'ld', md: 'xl' }} dangerouslySetInnerHTML={{__html: display }} /> }        
       </Box>
     )
   }
