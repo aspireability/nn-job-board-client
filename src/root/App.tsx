@@ -35,13 +35,13 @@ const App = () => {
       >
         <HStack gap={[0, 3]}>
           <Image
-            boxSize={{ base: '40px', md: '60px' }}
-            src='./navajoSeal_SiteLogo_only.png'
+            boxSize={{ base: '85%', md: '80%' }}
+            src='./Job-Board-Logo.png'
             alt='Navajo Nation Seal'
             onClick={() => navigate('/')}
             cursor="pointer"
           />
-          <Heading fontSize={{ base: 'lg', md: '3xl' }}>Navajo Nation Job Board</Heading>
+          {/* <Heading fontSize={{ base: 'lg', md: '3xl' }}>Navajo Nation Job Board</Heading> */}
         </HStack>
         <Spacer />
         <Menu>
