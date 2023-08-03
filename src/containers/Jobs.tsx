@@ -133,7 +133,7 @@ const Home = () => {
             <SimpleGrid columns={{ base: 2, md: 6 }} gap={2} alignItems="end">
               <InputGroup>
                 <InputLeftElement mt="-1" pointerEvents='none' children={<SearchIcon color='gray.900' />} />
-                <Input size="sm" placeholder={'Title or Employer'} onChange={handleJobTitle} value={jobTitle} />                    
+                <Input size="sm" placeholder={'Title or Employer or ID'} onChange={handleJobTitle} value={jobTitle} />                    
               </InputGroup>
               <InputGroup>
                 <InputLeftElement mt="-1" pointerEvents='none' children={<Icon as={MdOutlineLocationOn} color='gray.900' />} />

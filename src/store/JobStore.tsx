@@ -109,6 +109,7 @@ const JobProvider = ({ children }: any) => {
         filterCollector.push({ '_or': [
           { 'Job_Title': { '_icontains': filterOptions.jobTitle }},
           { 'Employer': { '_icontains': filterOptions.jobTitle }},
+          { 'id': {'_eq': filterOptions.jobTitle}},
         ]})
       }
       if (filterOptions.location) {
