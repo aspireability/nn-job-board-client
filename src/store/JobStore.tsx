@@ -106,9 +106,10 @@ const JobProvider = ({ children }: any) => {
       const filterCollector: any[] = [];
 
       if (filterOptions.jobTitle) {
-        filterCollector.push({ '_or': [
+        filterCollector.push({ '_or': [          
           { 'Job_Title': { '_icontains': filterOptions.jobTitle }},
           { 'Employer': { '_icontains': filterOptions.jobTitle }},
+          { 'Posting_ID': { '_icontains': filterOptions.jobTitle }},
         ]})
       }
       if (filterOptions.location) {
