@@ -25,7 +25,7 @@ const JobCard = ({
      return (
         <Box boxShadow="md" border="1px" borderColor="gray.200" borderRadius={6} p={6} height="100%" bgColor="white">
           <Box mb={3}>
-              <Heading fontSize="2xl">{job.jobTitle}</Heading>
+              <Heading fontSize="xl">{job.jobTitle}</Heading>
           </Box>
           {renderProperty('Employer', job.employer)}
           {renderProperty('Sector', job.sector, true, sectorOptions)}
