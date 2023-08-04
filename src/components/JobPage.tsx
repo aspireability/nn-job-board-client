@@ -78,6 +78,7 @@ const JobPage = ({
     <Box>
       <SimpleGrid columns={{ base: 1, md: 1 }}>
         <Heading mb={{ base: 2, md: 5 }}>{job.jobTitle}</Heading>
+        {renderProperty('Posting Id', job.postingID)}
         {renderProperty('Job Description', job.jobDescription)}
         <Box mb={3}>
           {renderLabel('Job Description Document (Click to view)')}
@@ -97,8 +98,7 @@ const JobPage = ({
         {renderProperty('Classification', job.classification)}
         {renderProperty('Preferred Educational/Experience', job.preferredEdExp)}
         {renderProperty('Required Documents', job.requiredDocuments)}
-        {renderProperty('Additional Requirements', job.additionalReq)}
-        {renderProperty('Posting_ID', job.postingID)}
+        {renderProperty('Additional Requirements', job.additionalReq)}        
         {renderProperty('Application Instructions', job.applicationIn)}
         {applyLink ? 
         <Box mt={3}>
