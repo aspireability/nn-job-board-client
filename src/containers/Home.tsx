@@ -33,8 +33,10 @@ const Home = () => {
               <Text textAlign="center" fontSize={{ base: 'md', md: 'xl' }}>Welcome to the Official Job Board of the Navajo Nation</Text>
               
               <SimpleGrid minChildWidth="100px" gap={{ base: 3, md: 3 }}>
+                <HStack>
               <Button as={Link} to={path} colorScheme="blue" size={{ base: 'md', md: 'lg'}} >Explore Jobs</Button>
-              <Button colorScheme="red" size={{ base: 'md', md: 'lg'}}>For Employers</Button>          
+              <Button colorScheme="red" size={{ base: 'md', md: 'lg'}}>For Employers</Button>
+              </HStack>          
               </SimpleGrid>
               
             </VStack>
