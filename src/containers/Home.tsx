@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 
 const Home = () => {
     const path = '/jobs'
+    const newLink = 'https://forms.gle/LS3dMQ9fMEEpfkaH8'
 
     const renderHero = () => {
       return (
@@ -34,7 +35,7 @@ const Home = () => {
               
               <SimpleGrid columns={{ base: 1, md: 2 }} gap={2} alignItems="end" >
               <Button as={Link} to={path} colorScheme="blue" size={{ base: 'md', md: 'lg'}} >Explore Jobs</Button>
-              <Button colorScheme="red" size={{ base: 'md', md: 'lg'}}>For Employers</Button>
+              <Button as={Link} to={newLink} colorScheme="red" size={{ base: 'md', md: 'lg'}}>For Employers</Button>
               </SimpleGrid>
              
             </VStack>
