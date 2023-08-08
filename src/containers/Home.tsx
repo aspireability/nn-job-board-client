@@ -1,4 +1,4 @@
-import { Box, Button, Center, Heading, Text, VStack, SimpleGrid } from "@chakra-ui/react"
+import { Box, Button, Center, Heading, Text, VStack, SimpleGrid, HStack, Stack } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
 import { Icon } from '@chakra-ui/react';
 import { MdOutlinePersonSearch, MdOutlineMap } from 'react-icons/md';
@@ -31,7 +31,12 @@ const Home = () => {
               <Heading fontSize={{ base: '3xl', md: '7xl' }} fontWeight="bold">Kǫ́ǫ́ Naanish Hólǫ́</Heading>
               <Heading fontSize={{ base: '2xl', md: '5xl' }}>There ARE Jobs HERE</Heading>
               <Text textAlign="center" fontSize={{ base: 'md', md: 'xl' }}>Welcome to the Official Job Board of the Navajo Nation</Text>
-              <Button as={Link} to={path} colorScheme="blue" size={{ base: 'md', md: 'lg'}}>Explore Jobs</Button>                
+              
+              <SimpleGrid minChildWidth="100px" gap={{ base: 3, md: 3 }}>
+              <Button as={Link} to={path} colorScheme="blue" size={{ base: 'md', md: 'lg'}} >Explore Jobs</Button>
+              <Button colorScheme="red" size={{ base: 'md', md: 'lg'}}>For Employers</Button>          
+              </SimpleGrid>
+              
             </VStack>
           </Box>
         </Box>
