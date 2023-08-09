@@ -34,8 +34,8 @@ const Home = () => {
               <Text textAlign="center" fontSize={{ base: 'md', md: 'xl' }}>Welcome to the Official Job Board of the Navajo Nation</Text>
               
               <SimpleGrid columns={{ base: 1, md: 2 }} gap={2} alignItems="end" >
-              <Button as={Link} to={path} colorScheme="blue" size={{ base: 'md', md: 'lg'}} >Explore Jobs</Button>
-              <Button as={Link} to={newLink} colorScheme="red" size={{ base: 'md', md: 'lg'}} target="_blank">For Employers</Button>
+              <Button as={Link} to={path} colorScheme="teal" size={{ base: 'md', md: 'lg'}} >Explore Jobs</Button>
+              <Button as={Link} to={newLink} colorScheme="blue" size={{ base: 'md', md: 'lg'}} target="_blank">For Employers</Button>
               </SimpleGrid>
              
             </VStack>
