@@ -1,4 +1,4 @@
-import { Box, Button, Center, Heading, Text, VStack, SimpleGrid } from "@chakra-ui/react"
+import { Box, Button, Center, Heading, Text, VStack, SimpleGrid, HStack, Stack } from "@chakra-ui/react"
 import { Link } from "react-router-dom";
 import { Icon } from '@chakra-ui/react';
 import { MdOutlinePersonSearch, MdOutlineMap } from 'react-icons/md';
@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 
 const Home = () => {
     const path = '/jobs'
+    const newLink = 'https://forms.gle/LS3dMQ9fMEEpfkaH8'
 
     const renderHero = () => {
       return (
@@ -31,7 +32,12 @@ const Home = () => {
               <Heading fontSize={{ base: '3xl', md: '7xl' }} fontWeight="bold">Kǫ́ǫ́ Naanish Hólǫ́</Heading>
               <Heading fontSize={{ base: '2xl', md: '5xl' }}>There ARE Jobs HERE</Heading>
               <Text textAlign="center" fontSize={{ base: 'md', md: 'xl' }}>Welcome to the Official Job Board of the Navajo Nation</Text>
-              <Button as={Link} to={path} colorScheme="blue" size={{ base: 'md', md: 'lg'}}>Explore Jobs</Button>                
+              
+              <SimpleGrid columns={{ base: 1, md: 2 }} gap={2} alignItems="end" >
+              <Button as={Link} to={path} colorScheme="teal" size={{ base: 'md', md: 'lg'}} >Explore Jobs</Button>
+              <Button as={Link} to={newLink} colorScheme="blue" size={{ base: 'md', md: 'lg'}} target="_blank">For Employers</Button>
+              </SimpleGrid>
+             
             </VStack>
           </Box>
         </Box>
