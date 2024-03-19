@@ -142,10 +142,12 @@ const Home = () => {
               <Box width="100%">
                   {/* <Text fontSize="sm">Sector</Text> */}
                   <Select placeholder='All Sectors' onChange={handleSector} value={sector} size="sm" >
-                      <option value='Tribal Enterprise'>Tribal Enterprise</option>
                       <option value='Government'>Government</option>
                       <option value='Non-Profit Organization'>Non-Profit Organization</option>
                       <option value='Private Sector'>Private Sector</option>
+                      <option value='Tribal Enterprise'>Tribal Enterprise</option>
+                      <option value='School'>School</option>
+                      <option value='Not Available'>Not Available</option>
                   </Select>
               </Box>
               <Box width="100%">
