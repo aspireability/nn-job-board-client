@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+## Navajo Nation Job Board - Browser Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repo contains the client code for the Navajo Nation Job Board, hosted at https://knh.aspireability.io.
 
-## Available Scripts
+### Overview
 
-In the project directory, you can run:
+The job board is build using the (React)[https://react.dev/] javascript frontend library using the (typescript)[https://www.typescriptlang.org/] programming language.
 
-### `yarn start`
+- All code is under `src/` folder
+- Public assets like logos and banner images are under `/public`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Install the following:
+- Typescript
+- (Yarn)[https://yarnpkg.com/]
 
-### `yarn test`
+Install Libraries - first time or when there are new libraries in `package.json`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+yarn
+```
 
-### `yarn build`
+Copy environment files to your local repo folder
+```
+cp .env.example .env
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Running the code
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+yarn start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### How it works
 
-### `yarn eject`
+- The client assumes the existence of an [Directus](https://directus.io/) API. Directus is a database-as-a-service platform that allows us to store store and maintain our data, and provides an auto-generated API for each data table we manage.
+- The `.env` file specifies the directus API the client is retrieving the data it needs to populate the job board pages. It is pointed to our `live` environment by default. You can also point it to a locally running directus environment.
+- The `.env` file also contains the relevant google analytics id so we can properly track who is accessing the website.
+- The hosted Directus instance where our live data is located at the following url: https://aspire-ability-navajo-nation-job-board.directus.app. Talk to a team member for to get access as a new user.
+- We only manage one table in Directus: `Jobs`. This table contains all the jobs available for the job board. The data for this table is usually populated through a scrapping script (learn more at https://github.com/aspireability/nn-job-scrapper)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Hosting and Deployment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- The client is hosted using [GitHub Pages](https://pages.github.com/) feature from GitHub. GitHub pages allows us to host a website straight from a GitHub repository at a domain of our choosing. 
+- The domain is configured in the `CNAME` file, in the settings of our domain / DNS manager (google domains), and the [settings for the repository](https://github.com/aspireability/nn-job-board-client/settings/pages).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Deploying updates to the live website
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Check your `.env` file to make sure that the API url and google analytics code are set to the correct values
+2. Run the deploy command
+```
+yarn deploy
+```
+3. Press 'Enter' key to continue.
+4. Once you see 'Done' message, go to the repo on GitHub, and make sure the GitHub Pages 'Custom Domain' field is set to `knh.aspireability.io`. Click 'Save'. (See screenshot below)
+5. Changes should be live at https://knh.aspireability.io in a few minutes.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![alt text](public/github-pages-settings.png "GitHub Pages")
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Transferring Maintenance of the Job Board
+
+Please see sections above for full context. Transfer would involve providing access to the following:
+- Admin credentials to the [Job Board Directus Instance](https://aspire-ability-navajo-nation-job-board.directus.app)
+- Admin access to [this repository](https://github.com/aspireability/nn-job-board-client)
+- Admin access to the [job scrapper repository](https://github.com/aspireability/nn-job-scrapper)
+- Transfer of the `knh.aspireability.io` domain or configuration of a new domain (see Hosting section above)
