@@ -4,7 +4,7 @@ This repo contains the client code for the Navajo Nation Job Board, hosted at ht
 
 ### Overview
 
-The job board is build using the (React)[https://react.dev/] javascript frontend library using the (typescript)[https://www.typescriptlang.org/] programming language.
+The job board is build using the [React](https://react.dev/) javascript frontend library using the [typescript](https://www.typescriptlang.org/) programming language.
 
 - All code is under `src/` folder
 - Public assets like logos and banner images are under `/public`
@@ -13,9 +13,9 @@ The job board is build using the (React)[https://react.dev/] javascript frontend
 
 Install the following:
 - Typescript
-- (Yarn)[https://yarnpkg.com/]
+- [Yarn](https://yarnpkg.com/)
 
-Install Libraries - first time or when there are new libraries in `package.json`
+Install Libraries - first time or when there are updates in `package.json`
 
 ```
 yarn
@@ -34,7 +34,7 @@ yarn start
 
 ### How it works
 
-- The client assumes the existence of an [Directus](https://directus.io/) API. Directus is a database-as-a-service platform that allows us to store store and maintain our data, and provides an auto-generated API for each data table we manage.
+- The client assumes the existence of a [Directus](https://directus.io/) project API. Directus is a database-as-a-service platform that allows us to store store and maintain our data, and provides an auto-generated API for each data table we manage.
 - The `.env` file specifies the directus API the client is retrieving the data it needs to populate the job board pages. It is pointed to our `live` environment by default. You can also point it to a locally running directus environment.
 - The `.env` file also contains the relevant google analytics id so we can properly track who is accessing the website.
 - The hosted Directus instance where our live data is located at the following url: https://aspire-ability-navajo-nation-job-board.directus.app. Talk to a team member for to get access as a new user.
@@ -42,7 +42,7 @@ yarn start
 
 ### Hosting and Deployment
 
-- The client is hosted using [GitHub Pages](https://pages.github.com/) feature from GitHub. GitHub pages allows us to host a website straight from a GitHub repository at a domain of our choosing. 
+- The client is hosted using [GitHub Pages](https://pages.github.com/) feature from GitHub. GitHub Pages allows us to host a website straight from a GitHub repository at a domain of our choosing. 
 - The domain is configured in the `CNAME` file, in the settings of our domain / DNS manager (google domains), and the [settings for the repository](https://github.com/aspireability/nn-job-board-client/settings/pages).
 
 #### Deploying updates to the live website
