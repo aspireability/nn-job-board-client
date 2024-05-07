@@ -40,6 +40,14 @@ yarn start
 - The hosted Directus instance where our live data is located at the following url: https://aspire-ability-navajo-nation-job-board.directus.app. Talk to a team member for to get access as a new user.
 - We only manage one table in Directus: `Jobs`. This table contains all the jobs available for the job board. The data for this table is usually populated through a scrapping script (learn more at https://github.com/aspireability/nn-job-scrapper)
 
+### Data Access
+
+The job board data can be accessed through the directus exposed API, currenly setup as open to public without any authenticaion, by hitting the following endpoint
+
+```
+https://aspire-ability-navajo-nation-job-board.directus.app/items/Jobs?limit=-1
+```
+
 ### Hosting and Deployment
 
 - The client is hosted using [GitHub Pages](https://pages.github.com/) feature from GitHub. GitHub Pages allows us to host a website straight from a GitHub repository at a domain of our choosing. 
