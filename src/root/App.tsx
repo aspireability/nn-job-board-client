@@ -36,7 +36,7 @@ const App = () => {
         <HStack gap={[0, 3]}>
           <Image
             boxSize={{ base: '85%', md: '80%' }}
-            src='./Job-Board-Logo.png'
+            src='./Replacement Logo.png'
             alt='Navajo Nation Seal'
             onClick={() => navigate('/')}
             cursor="pointer"
