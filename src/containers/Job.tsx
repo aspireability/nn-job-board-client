@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import JobPage from '../components/JobPage';
 import { JobContextValue, useJob } from '../store/JobStore';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Job = () => {
     const { jobId } = useParams();
